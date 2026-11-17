@@ -805,3 +805,21 @@
     + `github_issue_perf01.png`: Chi tiết Issue #1.
     + `github_issue_perf02.png`: Chi tiết Issue #2.
   - Nhúng trực tiếp các đường link và ảnh chụp màn hình vào file báo cáo `BUG_REPORT.md` thỏa mãn trọn vẹn yêu cầu Mục 14 đề bài.
+
+---
+
+### Lần 45: Giải thích chi tiết Đề xuất Continuous Performance Testing trong Task 3 (G9.6 - Disrupt)
+- **Tên công cụ AI**: Antigravity (Gemini 3.8 Flash)
+- **Ngày và giờ**: 2026-11-17 22:17:43
+- **Câu lệnh (Prompt)**:
+  ```text
+  vậy còn task 3 thì sao, giải thích task 3 và bạn đã làm gì
+  ```
+- **Kết quả do AI tạo ra**:
+  - Trình bày mục tiêu cốt lõi của Task 3 theo barem 10 điểm (Bloom-AI Level G9.6 - Disrupt): Chuyển đổi từ kiểm thử hiệu năng thủ công (Ad-hoc) sang mô hình kiểm thử tự động liên tục trong pipeline CI/CD (Continuous Performance Testing - CPT).
+  - Trình bày 3 thành phần kiến trúc đã xây dựng tại Mục 5 của `MAIN_REPORT.md`:
+    1. **Git Commit Watcher (Bộ lọc thông minh):** Sử dụng Path-filtering bỏ qua thay đổi tài liệu/frontend tĩnh, chỉ kích hoạt khi code backend/CSDL thay đổi.
+    2. **Dynamic Decision Engine (Điều phối theo ngữ cảnh):** PR chỉ chạy Smoke Load 30 giây (5 VUs) để dev nhận phản hồi nhanh; Merge to main mới chạy full suite (Load, Stress, Spike).
+    3. **P95 Regression Detector & Quality Gate:** So sánh phân vị $\Delta \text{p95} = \frac{\text{p95}_{\text{new}} - \text{p95}_{\text{base}}}{\text{p95}_{\text{base}}} \times 100\%$. Nếu vượt ngưỡng 20% thì chặn merge code.
+  - Phân tích 2 cặp đánh đổi kỹ thuật (Engineering Trade-offs): Chi phí vs Tốc độ phản hồi; Báo động giả (Noisy Neighbors) vs Độ nhạy phát hiện lỗi (với giải pháp Auto Retry 2 lần).
+  - Trình bày trực quan sơ đồ luồng Mermaid Flowchart tích hợp.
