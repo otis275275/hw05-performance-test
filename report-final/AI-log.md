@@ -765,3 +765,21 @@
     2. **Phần 2 - Bảng Săn lỗi AI (Misinterpretation Hunt):** Đối soát 3 lỗi sai thực tế với số liệu chuẩn trong log file thô (Lỗi gán nhầm VU thành RPS; Lỗi gán nhầm Throughput thành latency PUT /me; Lỗi phóng đại tỷ lệ lỗi và hiểu sai mã lỗi 403 thành crash server).
     3. **Phần 3 - Thẩm định Đề xuất Tối ưu (Feasible vs Hallucinated):** Phân loại và phản biện kỹ thuật 4 giải pháp (Index email, WAL mode vs Fake Connection pool cho SQLite, Kafka/Redis microservices).
   - Cập nhật số liệu thực nghiệm mới nhất vào Bảng tổng kết kịch bản tại Section 3.3 `MAIN_REPORT.md` và tái xuất bản bản PDF.
+
+---
+
+### Lần 43: Ghi nhận nhật ký AI Audit Log và tạm thời hoãn xuất bản file PDF
+- **Tên công cụ AI**: Antigravity (Gemini 3.8 Flash)
+- **Ngày và giờ**: 2026-11-17 21:31:27
+- **Câu lệnh (Prompt)**:
+  ```text
+  append AI log những đoạn mới nãy giờ ta bàn vào file@[/home/sv/Downloads/seminar testing/Software-Testing-Seminar-Group10/eshop-sut/report-final/AI-log.md] , tạm thời ta tạm gác các file pdf final
+  ```
+- **Kết quả do AI tạo ra**:
+  - Cập nhật toàn bộ các lượt thảo luận gần nhất vào `AI-log.md` (từ Lần 34 đến Lần 43) bao gồm:
+    + Quy trình đọc và đối soát file log thô `summary.json`.
+    + Giải thích sự khác biệt giữa chuẩn `.jtl` (Apache JMeter) và `raw.csv` (Grafana k6).
+    + Thực thi chạy lại toàn bộ 4 kịch bản (Load, Stress, Spike, Endurance) để xuất file Raw CSV (ghi nhận mọi request của mọi VU) và Standard JTL.
+    + Kiểm toán đối soát chéo độc lập: chứng minh số liệu khớp 100% giữa Raw CSV, JTL và Summary JSON.
+    + Tổng kết chi tiết nội dung 3 phần của Task 2 (AI raw output, Bảng săn lỗi Misinterpretation Hunt, Thẩm định đề xuất Feasible vs Hallucinated).
+  - Tạm dừng tác vụ biên dịch PDF tự động (`MAIN_REPORT.pdf`, `AI-log.pdf`) theo yêu cầu của sinh viên để tối ưu tốc độ làm việc.
