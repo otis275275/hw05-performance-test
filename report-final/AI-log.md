@@ -588,3 +588,26 @@
     ```bash
     git push -u origin eshop-standalone:main
     ```
+
+---
+
+### Lần 33: Hướng dẫn xử lý lỗi Git Non-Fast-Forward khi ghi đè nhánh `main` bằng `git push --force`
+- **Tên công cụ AI**: Antigravity (Gemini 3.8 Flash)
+- **Ngày và giờ**: 2026-11-17 14:40:40
+- **Câu lệnh (Prompt)**:
+  ```text
+  sv@FIT:~/Downloads/seminar testing/Software-Testing-Seminar-Group10$ git push -u origin eshop-standalone:main
+  To https://github.com/otis275275/hw05-performance-test.git
+   ! [rejected]        eshop-standalone -> main (non-fast-forward)
+  error: failed to push some refs to 'https://github.com/otis275275/hw05-performance-test.git'
+  hint: Updates were rejected because the tip of your current branch is behind
+  hint: its remote counterpart. If you want to integrate the remote changes,
+  hint: use 'git pull' before pushing again.
+  hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+  ```
+- **Kết quả do AI tạo ra**:
+  - Phân tích nguyên nhân: Nhánh `main` trên remote GitHub trước đó đang giữ commit của thư mục mẹ (`Software-Testing-Seminar-Group10`), trong khi nhánh `eshop-standalone` có cây commit độc lập chỉ chứa `eshop-sut`. Do hai nhánh khác gốc lịch sử (unrelated histories), Git kích hoạt cơ chế bảo vệ từ chối push non-fast-forward.
+  - Giải pháp: Sử dụng cờ `--force` để thay thế hoàn toàn nhánh `main` trên remote bằng cây thư mục sạch `eshop-sut`:
+    ```bash
+    git push -u origin eshop-standalone:main --force
+    ```
