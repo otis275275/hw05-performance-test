@@ -204,6 +204,7 @@ export default function () {
       const params = {
         headers: { 'Content-Type': 'application/json' },
         tags: { endpoint: 'lockout_test' },
+        responseCallback: http.expectedStatuses(401, 403),
       };
 
       const res = http.post(`${BASE_URL}/api/login`, badPayload, params);

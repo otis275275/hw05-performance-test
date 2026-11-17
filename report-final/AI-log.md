@@ -337,3 +337,57 @@
     1. `23120228_Stress_20261117.js`: Tải bậc thang lũy tiến (20 → 50 → 100 VUs) nhằm tìm điểm gãy hệ thống.
     2. `23120228_Spike_20261117.js`: Sốc tải bùng nổ tức thì (5 → 80 VUs trong 10s, duy trì 20s rồi hạ về 5 VUs) để đo khả năng tự phục hồi.
     3. `23120228_Endurance_20261117.js`: Bài test ngâm bền bỉ (duy trì liên tục ở mức tải 25 VUs) để tìm ngưỡng phần cứng tối đa (Max Stable RPS và Memory Ceiling).
+
+
+---
+
+### Lần 19: So sánh và làm rõ sự khác biệt giữa các kịch bản kiểm thử hiệu năng
+- **Tên công cụ AI**: Antigravity (Gemini 3.8 Flash)
+- **Ngày và giờ**: 2026-11-17 13:17:50
+- **Câu lệnh (Prompt)**:
+  ```text
+  sự khác biệt giữa các file script là gì?
+  ```
+- **Kết quả do AI tạo ra**:
+  - Phân tích bản chất kỹ thuật: Cả 4 kịch bản đều **dùng chung một luồng nghiệp vụ E2E duy nhất** (`POST /api/login` -> `GET /api/users/me` -> `PUT /api/users/me` -> `POST /api/login lockout test`) theo đúng yêu cầu đề bài.
+  - Chỉ ra 3 điểm khác biệt cốt lõi:
+    1. **Mục tiêu thử nghiệm (Test Objective):** Load test đánh giá SLA tải thường; Stress test tìm điểm gãy cực hạn; Spike test đo độ kiên cường và khả năng tự hồi phục sau sốc tải; Endurance test tìm ngưỡng bền bỉ phần cứng và rò rỉ RAM.
+    2. **Mô hình tải (Load Profile / Stages):**
+       * Load: Hình thang phẳng thấp (Ramp-up nhẹ lên 15 VUs, duy trì 1m).
+       * Stress: Hình bậc thang leo dốc (20 -> 50 -> 100 VUs) để dồn nén tải ghi SQLite.
+       * Spike: Hình gai nhọn (Nền 5 VUs bùng nổ tức thì lên 80 VUs trong 10s rồi tụt thẳng về 5 VUs).
+       * Endurance: Hình cao nguyên trải dài (25 VUs duy trì liên tục trong 10 phút).
+    3. **Hệ thống Thresholds:** Được hiệu chỉnh theo mục tiêu kịch bản: Load test áp ngưỡng khắt khe nhất (p95 < 800ms, lỗi < 1%), Stress test nới lỏng (p95 < 1500ms, lỗi < 5%), Spike test ưu tiên tỷ lệ sống sót trong thời gian sốc tải (p95 < 2000ms, lỗi < 10%).
+
+
+---
+
+### Lần 20: Chuyển sang Giai đoạn 3 - Khởi động Backend SUT và đo đạc phần cứng
+- **Tên công cụ AI**: Antigravity (Gemini 3.8 Flash)
+- **Ngày và giờ**: 2026-11-17 13:21:09
+- **Câu lệnh (Prompt)**:
+  ```text
+  ròi oke rồi
+  ```
+- **Kết quả do AI tạo ra**:
+  - Thu thập thông số cấu hình phần cứng máy kiểm thử (`FIT.HCMUS`, CPU, RAM, OS, Node runtime) đưa vào bảng Hardware Specification theo đúng ràng buộc chống gian lận (Anti-Cheat Constraints).
+  - Khởi động dịch vụ Backend API `server.js` tại cổng 3000 và kiểm tra tính sẵn sàng của hệ thống.
+  - Tiến hành thực thi kịch bản đầu tiên: **Load Testing (`23120228_Load_20261117.js`)** kèm lệnh tự động reset database và lưu đồng thời 3 định dạng báo cáo (Console Summary, Web Dashboard HTML tĩnh, JSON Summary thô).
+
+
+---
+
+### Lần 21: Thực thi toàn diện 3 kịch bản chính (Load, Stress, Spike) và xuất 3 định dạng báo cáo
+- **Tên công cụ AI**: Antigravity (Gemini 3.8 Flash)
+- **Ngày và giờ**: 2026-11-17 13:24:00
+- **Câu lệnh (Prompt)**:
+  ```text
+  [Hệ thống tự động điều phối qua run_scenario.sh]
+  ```
+- **Kết quả do AI tạo ra**:
+  - Tinh chỉnh cơ chế `expectedStatuses(401, 403)` trong k6 để các request kiểm tra cơ chế khóa tài khoản hợp lệ không bị đánh dấu nhầm thành lỗi HTTP Failures.
+  - Thực thi thành công cả 3 kịch bản kiểm thử:
+    1. **Load Test (15 VUs, 1m35s)**: 957 requests, 9.78 RPS, p95 = 12.33ms, Error Rate = 0.00%, E2E Success = 100%.
+    2. **Stress Test (100 VUs, 1m55s)**: 5,124 requests, 43.23 RPS, p95 = 7.58ms, Error Rate = 0.00%, E2E Success = 100%.
+    3. **Spike Test (80 VUs sốc tải, 1m15s)**: 2,210 requests, 29.18 RPS, p95 = 6.60ms, Error Rate = 4.43% (khi tài khoản test tạm thời bị khóa do chạm ngưỡng lockout lúc sốc tải đỉnh và tự hồi phục về bình thường).
+  - Xuất đầy đủ 3 bộ báo cáo Web-Dashboard HTML tương tác vào `report-final/html-reports/` và 3 file JSON metric thô vào `report-final/raw-logs/`.

@@ -12,7 +12,7 @@ if [ -z "$SCRIPT_PATH" ] || [ -z "$REPORT_NAME" ]; then
   exit 1
 fi
 
-BASE_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../.." && pwd)/eshop-sut"
+BASE_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../.." && pwd)"
 REPORT_DIR="$BASE_DIR/report-final"
 HTML_DIR="$REPORT_DIR/html-reports"
 RAW_DIR="$REPORT_DIR/raw-logs"

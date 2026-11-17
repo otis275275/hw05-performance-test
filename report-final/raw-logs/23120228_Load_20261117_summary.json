@@ -1,0 +1,264 @@
+{
+    "metrics": {
+        "http_req_receiving": {
+            "med": 0.099758,
+            "max": 1.214775,
+            "p(90)": 0.128848,
+            "p(95)": 0.14016499999999998,
+            "avg": 0.10690464158829664,
+            "min": 0.043613
+        },
+        "group_duration": {
+            "avg": 4.799732025078363,
+            "min": 1.534951,
+            "med": 2.611134,
+            "max": 17.149523,
+            "p(90)": 11.9235924,
+            "p(95)": 12.659542799999999
+        },
+        "http_req_connecting": {
+            "p(90)": 0,
+            "p(95)": 0,
+            "avg": 0.0051902580982236156,
+            "min": 0,
+            "med": 0,
+            "max": 0.488012
+        },
+        "http_req_waiting": {
+            "p(90)": 11.3971438,
+            "p(95)": 12.19652,
+            "avg": 4.268321300940441,
+            "min": 1.093797,
+            "med": 2.035957,
+            "max": 16.676298
+        },
+        "data_received": {
+            "count": 459593,
+            "rate": 4695.413013037661
+        },
+        "http_req_failed": {
+            "passes": 0,
+            "fails": 957,
+            "thresholds": {
+                "rate<0.01": false
+            },
+            "value": 0
+        },
+        "http_req_sending": {
+            "avg": 0.04046589759665617,
+            "min": 0.017623,
+            "med": 0.03731,
+            "max": 0.262386,
+            "p(90)": 0.050319,
+            "p(95)": 0.06172499999999999
+        },
+        "profile_update_duration": {
+            "p(95)": 13.177552699999993,
+            "avg": 9.507943581939797,
+            "min": 4.592367,
+            "med": 11.1995,
+            "max": 16.81445,
+            "p(90)": 12.8049916,
+            "thresholds": {
+                "p(95)<600": false
+            }
+        },
+        "e2e_success_rate": {
+            "passes": 299,
+            "fails": 0,
+            "thresholds": {
+                "rate>0.98": false
+            },
+            "value": 1
+        },
+        "http_req_tls_handshaking": {
+            "p(90)": 0,
+            "p(95)": 0,
+            "avg": 0,
+            "min": 0,
+            "med": 0,
+            "max": 0
+        },
+        "http_reqs": {
+            "count": 957,
+            "rate": 9.777151204385275
+        },
+        "http_req_duration": {
+            "p(95)": 12.329208799999998,
+            "avg": 4.4156918401253975,
+            "min": 1.190249,
+            "med": 2.182603,
+            "max": 16.81445,
+            "p(90)": 11.563041,
+            "thresholds": {
+                "p(95)<800": false
+            }
+        },
+        "vus": {
+            "value": 1,
+            "min": 1,
+            "max": 15
+        },
+        "iteration_duration": {
+            "p(95)": 4022.8923018,
+            "avg": 4018.372384441468,
+            "min": 4012.370528,
+            "med": 4019.222347,
+            "max": 4033.216064,
+            "p(90)": 4022.059343
+        },
+        "login_duration": {
+            "avg": 2.213004234113713,
+            "min": 1.190249,
+            "med": 2.150363,
+            "max": 3.392009,
+            "p(90)": 2.5659921999999997,
+            "p(95)": 2.798969999999999,
+            "thresholds": {
+                "p(95)<500": false
+            }
+        },
+        "vus_max": {
+            "value": 15,
+            "min": 15,
+            "max": 15
+        },
+        "http_req_duration{expected_response:true}": {
+            "avg": 4.4156918401253975,
+            "min": 1.190249,
+            "med": 2.182603,
+            "max": 16.81445,
+            "p(90)": 11.563041,
+            "p(95)": 12.329208799999998
+        },
+        "lockout_duration": {
+            "p(90)": 2.1906474,
+            "p(95)": 2.29224515,
+            "avg": 2.0822682500000003,
+            "min": 1.571188,
+            "med": 1.882702,
+            "max": 11.629052
+        },
+        "data_sent": {
+            "count": 264500,
+            "rate": 2702.2533892997963
+        },
+        "http_req_blocked": {
+            "p(90)": 0.011746,
+            "p(95)": 0.014450999999999999,
+            "avg": 0.016618526645768034,
+            "min": 0.004358,
+            "med": 0.008807,
+            "max": 0.604933
+        },
+        "checks": {
+            "passes": 1854,
+            "fails": 0,
+            "value": 1
+        },
+        "iterations": {
+            "count": 299,
+            "rate": 3.054721222686726
+        },
+        "profile_read_duration": {
+            "avg": 1.994373240802675,
+            "min": 1.409583,
+            "med": 1.897325,
+            "max": 9.176337,
+            "p(90)": 2.2747924,
+            "p(95)": 2.4975373,
+            "thresholds": {
+                "p(95)<300": false
+            }
+        }
+    },
+    "root_group": {
+        "name": "",
+        "path": "",
+        "id": "d41d8cd98f00b204e9800998ecf8427e",
+        "groups": {
+            "01_Auth_Login": {
+                "groups": {},
+                "checks": {
+                    "login status is 200": {
+                        "name": "login status is 200",
+                        "path": "::01_Auth_Login::login status is 200",
+                        "id": "74242cf195304a4f5fe2df3b2cde0ac0",
+                        "passes": 299,
+                        "fails": 0
+                    },
+                    "login returns JWT token": {
+                        "name": "login returns JWT token",
+                        "path": "::01_Auth_Login::login returns JWT token",
+                        "id": "41762568d70691a7e4c199c0650b3c9f",
+                        "passes": 299,
+                        "fails": 0
+                    }
+                },
+                "name": "01_Auth_Login",
+                "path": "::01_Auth_Login",
+                "id": "450eee8f5156cf3667bf8d68e86a28c2"
+            },
+            "02_Read_Profile": {
+                "name": "02_Read_Profile",
+                "path": "::02_Read_Profile",
+                "id": "4182e48b8cd0ff558d8e38b12a7e8da7",
+                "groups": {},
+                "checks": {
+                    "read profile status is 200": {
+                        "id": "be7f553a1c563188e19f6df4cbb30917",
+                        "passes": 299,
+                        "fails": 0,
+                        "name": "read profile status is 200",
+                        "path": "::02_Read_Profile::read profile status is 200"
+                    },
+                    "read profile contains email": {
+                        "fails": 0,
+                        "name": "read profile contains email",
+                        "path": "::02_Read_Profile::read profile contains email",
+                        "id": "da347ed84a83c83789ebb89f944ef9f3",
+                        "passes": 299
+                    }
+                }
+            },
+            "03_Transactional_UpdateProfile": {
+                "name": "03_Transactional_UpdateProfile",
+                "path": "::03_Transactional_UpdateProfile",
+                "id": "3e9fe0bff92d501458d3b1e037d5c744",
+                "groups": {},
+                "checks": {
+                    "update profile status is 200": {
+                        "passes": 299,
+                        "fails": 0,
+                        "name": "update profile status is 200",
+                        "path": "::03_Transactional_UpdateProfile::update profile status is 200",
+                        "id": "0df4b538da5067d6dcd5d2a40b3e999a"
+                    },
+                    "update profile message is Profile updated": {
+                        "name": "update profile message is Profile updated",
+                        "path": "::03_Transactional_UpdateProfile::update profile message is Profile updated",
+                        "id": "3a4c6f6a33e318cd0e441475ebd75913",
+                        "passes": 299,
+                        "fails": 0
+                    }
+                }
+            },
+            "04_Auth_LockoutBehavior": {
+                "name": "04_Auth_LockoutBehavior",
+                "path": "::04_Auth_LockoutBehavior",
+                "id": "b9f08c4886a2c19188e3ece571947597",
+                "groups": {},
+                "checks": {
+                    "invalid credentials returns 401 or 403": {
+                        "name": "invalid credentials returns 401 or 403",
+                        "path": "::04_Auth_LockoutBehavior::invalid credentials returns 401 or 403",
+                        "id": "bab4ab4b998e6d9a674373694c3168b2",
+                        "passes": 60,
+                        "fails": 0
+                    }
+                }
+            }
+        },
+        "checks": {}
+    }
+}
