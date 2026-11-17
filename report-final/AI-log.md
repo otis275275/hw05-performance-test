@@ -611,3 +611,23 @@
     ```bash
     git push -u origin eshop-standalone:main --force
     ```
+
+---
+
+### Lần 34: Hướng dẫn chi tiết vị trí và cách đọc thông số Load Test trong Raw JSON Log
+- **Tên công cụ AI**: Antigravity (Gemini 3.8 Flash)
+- **Ngày và giờ**: 2026-11-17 20:15:01
+- **Câu lệnh (Prompt)**:
+  ```text
+  Bây giờ là task 2, bạn ta sẽ đi từng report để check, đầu tiên load test thì bạn đọc thông số ở đâu? tui sẽ check kĩ
+  ```
+- **Kết quả do AI tạo ra**:
+  - Chỉ rõ vị trí file log JSON thô của Load Test: `eshop-sut/report-final/raw-logs/23120228_Load_20261117_summary.json`.
+  - Cung cấp đường dẫn tuyệt đối đến từng JSON key cụ thể trong đối tượng `metrics`:
+    1. Tổng requests & Throughput: `metrics.http_reqs.count = 957`, `metrics.http_reqs.rate = 9.78 req/s`.
+    2. Độ trễ toàn cục: `metrics.http_req_duration.avg = 4.42 ms`, `p(95) = 12.33 ms`, `p(50) = 2.18 ms`.
+    3. Tỷ lệ lỗi: `metrics.http_req_failed.value = 0` (0.00%).
+    4. Tải đồng thời: `metrics.vus_max.value = 15`.
+    5. Độ trễ từng Endpoint: `login_duration.p(95) = 2.80 ms`, `profile_read_duration.p(95) = 2.50 ms`, `profile_update_duration.p(95) = 13.18 ms`, `lockout_duration.p(95) = 2.29 ms`.
+    6. Tỷ lệ thành công E2E: `e2e_success_rate.value = 1` (100%).
+  - Hướng dẫn cả 2 cách đối soát trực quan: mở file JSON và chạy script CLI `audit_metrics.py`.
