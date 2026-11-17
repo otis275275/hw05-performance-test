@@ -535,3 +535,19 @@
   - Thông báo hiện trạng: Toàn bộ nội dung báo cáo lỗi (Bug Report & Performance Issues) đã được soạn thảo đầy đủ 100% trong `BUG_REPORT.md` và `BUG_REPORT.pdf`, nhưng chưa tạo trực tiếp trên giao diện web GitHub Issues do môi trường local chưa tích hợp GitHub CLI/token xác thực cá nhân.
   - Cung cấp đường dẫn trực tiếp và mẫu nội dung Markdown chuẩn bị sẵn cho **BUG-01** (`server.js:54 login_attempts + 2`) để sinh viên mở trình duyệt tạo Issue trên repo chỉ với 1 cú click.
   - Hướng dẫn sinh viên chụp ảnh màn hình (screenshot) Issue sau khi tạo và lưu vào thư mục `report-final/screenshots/` để thỏa mãn 100% yêu cầu Mục 14 đề bài.
+
+---
+
+### Lần 30: Thống kê và phân loại toàn bộ danh sách Bug & Performance Issues
+- **Tên công cụ AI**: Antigravity (Gemini 3.8 Flash)
+- **Ngày và giờ**: 2026-11-17 14:26:24
+- **Câu lệnh (Prompt)**:
+  ```text
+  nhưng hiện tại ta đang có mấy bug
+  ```
+- **Kết quả do AI tạo ra**:
+  - Thống kê chi tiết danh mục gồm **3 vấn đề (1 Functional/Security Bug và 2 Performance Issues)** đã được ghi nhận trong `BUG_REPORT.md`:
+    1. **BUG-01 (Mức độ High - Lỗi Logic / Nghiệp vụ):** `server.js:54` cộng `login_attempts + 2` khiến tài khoản bị khóa sau chỉ 2 lần sai thay vì 3 lần theo FR-02.
+    2. **PERF-01 (Mức độ Medium - Điểm nghẽn CSDL):** SQLite mặc định Rollback Journal gây nghẽn khóa toàn bảng (Exclusive lock contention) khi 100 VUs cùng ghi `PUT /api/users/me`. Đề xuất giải pháp WAL mode (`PRAGMA journal_mode = WAL;`).
+    3. **PERF-02 (Mức độ Medium - Tối ưu hóa truy vấn):** Thiếu B-Tree Index trên cột `users(email)`, gây Full Table Scan $O(N)$ trên mỗi thao tác đăng nhập. Đề xuất thêm `CREATE INDEX idx_users_email ON users(email);`.
+  - Làm rõ với sinh viên: Theo barem đề bài, bạn chỉ cần tạo ít nhất **1 issue chính (BUG-01)** lên GitHub Issues là đã đáp ứng trọn vẹn yêu cầu chấm điểm, hoặc có thể tạo cả 3 để đạt điểm tuyệt đối.
