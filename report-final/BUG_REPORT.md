@@ -47,8 +47,11 @@ const newAttempts = user.login_attempts + 1;
 
 ## 2. PERF-01 (Hiệu năng): SQLite Table Lock Contention khi chịu tải ghi đồng thời ở Stress Test
 
+* **GitHub Issue:** [#1 (PERF-01 on GitHub)](https://github.com/otis275275/hw05-performance-test/issues/1)
 * **Mức độ nghiêm trọng:** Medium
 * **Vị trí phát hiện:** Thao tác Transactional `PUT /api/users/me` dưới mức tải 100 VUs.
+* **Ảnh minh chứng trên GitHub Issues:**
+  ![GitHub Issue PERF-01](screenshots/github_issue_perf01.png)
 
 ### Mô tả chi tiết:
 * SQLite là cơ sở dữ liệu dựa trên file đơn cục bộ (`database.sqlite`). Theo mặc định, SQLite sử dụng chế độ **Rollback Journal**.
@@ -66,8 +69,11 @@ db.run("PRAGMA journal_mode = WAL;");
 
 ## 3. PERF-02 (Hiệu năng): Thiếu chỉ mục (B-Tree Index) trên cột `email` bảng `users`
 
+* **GitHub Issue:** [#2 (PERF-02 on GitHub)](https://github.com/otis275275/hw05-performance-test/issues/2)
 * **Mức độ nghiêm trọng:** Low - Medium (Tăng dần theo kích thước database)
 * **Vị trí phát hiện:** Bảng `users` trong `backend/database.js`.
+* **Ảnh minh chứng trên GitHub Issues:**
+  ![GitHub Issue PERF-02](screenshots/github_issue_perf02.png)
 
 ### Mô tả chi tiết:
 * Cả hai API tần suất cao là `POST /api/login` và kiểm tra tài khoản đều chạy câu lệnh:
@@ -81,3 +87,12 @@ Thêm câu lệnh tạo chỉ mục:
 ```sql
 CREATE INDEX IF NOT EXISTS idx_users_email ON users(email);
 ```
+
+---
+
+## 4. TỔNG HỢP DANH SÁCH ISSUES TRÊN GITHUB REPOSITORY
+
+Toàn bộ các sự cố hiệu năng đã được lập thành GitHub Issues chính thức tại kho lưu trữ [hw05-performance-test/issues](https://github.com/otis275275/hw05-performance-test/issues):
+
+![Danh sách GitHub Issues](screenshots/github_issues_list.png)
+
