@@ -300,3 +300,40 @@
     * Khi dùng `SharedArray` từ module `k6/data`: Dữ liệu chỉ được nạp và phân tích duy nhất 1 lần tại Init stage, lưu trữ dưới dạng bộ nhớ chỉ đọc (Read-only Shared Memory) ở tầng Go engine. Tất cả các VUs đều trỏ chung vào cùng một vùng nhớ mà không tốn thêm byte RAM nào.
   - Kết luận: **Rất nên dùng `SharedArray`**. Đây là Best Practice chuẩn mực của Grafana Labs trong kiểm thử hiệu năng Data-Driven và đồng bộ hoàn hảo với kiến trúc Demo 2 đã nghiên cứu.
   - Tiến hành bọc dữ liệu CSV bằng `SharedArray` trong toàn bộ các kịch bản.
+
+
+---
+
+### Lần 17: Xác định bước tiếp theo - Hoàn thiện các kịch bản Stress, Spike và chuẩn bị đo đạc
+- **Tên công cụ AI**: Antigravity (Gemini 3.8 Flash)
+- **Ngày và giờ**: 2026-11-17 13:11:38
+- **Câu lệnh (Prompt)**:
+  ```text
+  oke file đó oke rồi, giờ bước tiếp theo ta cần làm gì?
+  ```
+- **Kết quả do AI tạo ra**:
+  - Đối chiếu tiến độ Action Plan Task 1: Sau khi kịch bản Load Test đã được duyệt qua khâu Human Review (tích hợp `SharedArray` và `iterationInTest`), bước kế tiếp bao gồm 2 việc trọng tâm:
+    1. **Hoàn thiện 2 kịch bản kiểm thử tải đặc thù còn lại theo cùng luồng E2E:**
+       * **Stress Test (`23120228_Stress_20261117.js`)**: Cấu hình stages tải lũy tiến (20 → 50 → 100 VUs) để ép backend SQLite bộc lộ điểm gãy (breaking point) và kiểm tra ngưỡng chịu đựng khi nghẽn khóa ghi đồng thời.
+       * **Spike Test (`23120228_Spike_20261117.js`)**: Cấu hình sốc tải tức thì (tải nền 5 VUs vọt lên 80 VUs trong 10 giây, giữ 20s rồi hạ về 5 VUs) để đo khả năng tự phục hồi (resilience) của hệ thống sau khi hết sốc tải.
+       * **Endurance Test (`23120228_Endurance_20261117.js`)**: Phục vụ yêu cầu tìm ngưỡng phần cứng tối đa (Endurance threshold, duy trì tải ổn định 10–15 phút).
+    2. **Chuyển sang Giai đoạn 3 (Thực thi & Thu thập bằng chứng thực tế):** Khởi động backend, chạy thực tế các kịch bản qua k6, chụp ảnh `htop` giám sát tiến trình và trích xuất đồng thời 3 loại báo cáo (Console Summary, Web Dashboard HTML, JSON Metric log).
+
+
+---
+
+### Lần 18: Hoàn thiện toàn bộ các kịch bản Stress, Spike và Endurance tích hợp trọn vẹn Human Feedback
+- **Tên công cụ AI**: Antigravity (Gemini 3.8 Flash)
+- **Ngày và giờ**: 2026-11-17 13:13:55
+- **Câu lệnh (Prompt)**:
+  ```text
+  oke hoàn thành đi, nhớ áp dụng những feedback tui đưa bên Load script
+  ```
+- **Kết quả do AI tạo ra**:
+  - Áp dụng đầy đủ 100% các đóng góp cải tiến kỹ thuật từ khâu Human Review của sinh viên:
+    1. Sử dụng `SharedArray` từ module `k6/data` cho toàn bộ các tập dữ liệu `users.csv`, `profiles.csv`, `lockout_accounts.csv`.
+    2. Sử dụng `exec.scenario.iterationInTest` từ `k6/execution` làm bộ đếm đơn điệu toàn cục để điều phối dữ liệu Round-Robin hoàn toàn đồng nhất và không va chạm.
+  - Sinh mã hoàn chỉnh 3 kịch bản kiểm thử:
+    1. `23120228_Stress_20261117.js`: Tải bậc thang lũy tiến (20 → 50 → 100 VUs) nhằm tìm điểm gãy hệ thống.
+    2. `23120228_Spike_20261117.js`: Sốc tải bùng nổ tức thì (5 → 80 VUs trong 10s, duy trì 20s rồi hạ về 5 VUs) để đo khả năng tự phục hồi.
+    3. `23120228_Endurance_20261117.js`: Bài test ngâm bền bỉ (duy trì liên tục ở mức tải 25 VUs) để tìm ngưỡng phần cứng tối đa (Max Stable RPS và Memory Ceiling).
