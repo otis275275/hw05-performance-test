@@ -190,3 +190,59 @@
     * `admin@eshop.com` / `Admin123!` (Admin)
   - Cập nhật tệp `performance-tests/data/lockout_accounts.csv` sử dụng tài khoản `test@eshop.com` với mật khẩu sai `WrongPass123!` nhằm kích hoạt đúng cơ chế khóa tài khoản theo FR-02.
   - Tối ưu script `skills/performance-testing/scripts/reset_db.js` để bảo đảm phục hồi tài khoản chuẩn và mở khóa sau mỗi vòng lặp kiểm thử.
+
+
+---
+
+### Lần 11: Làm rõ mục đích kiến trúc của các tệp dữ liệu CSV trong kiểm thử hiệu năng
+- **Tên công cụ AI**: Antigravity (Gemini 3.8 Flash)
+- **Ngày và giờ**: 2026-11-17 09:46:49
+- **Câu lệnh (Prompt)**:
+  ```text
+  khoan đã nhưng ban đầu file csv bạn đưa với mục đích gì? để đăng nhập đúng hay đăng nhập sai hay để so sánh gì đó
+  ```
+- **Kết quả do AI tạo ra**:
+  - Phân tích mục đích của từng tệp dữ liệu theo yêu cầu bắt buộc "Make the workflow data-driven" của đề bài HW05:
+    1. `users.csv`: Dùng cho luồng **Đăng nhập thành công (Happy Path)** nhằm lấy JWT token hợp lệ để gửi tiếp các request `GET /api/users/me` và `PUT /api/users/me`.
+    2. `profiles.csv`: Dùng để **Tham số hóa dữ liệu ghi (Transactional Data Parameterization)** nhằm mô phỏng hành vi của nhiều người dùng thực tế với tên, địa chỉ, số điện thoại khác nhau, tránh việc các VUs gửi trùng một payload duy nhất.
+    3. `lockout_accounts.csv`: Dùng riêng cho nhánh kiểm thử **Cơ chế khóa tài khoản (Lockout Testing)** bằng cách cố tình gửi mật khẩu sai để kiểm tra server có kích hoạt bộ đếm và phản hồi `403 Forbidden` hay không.
+  - Giải thích lý do vì sao ban đầu cần nhiều tài khoản: Nếu tất cả VUs cùng dùng chung 1 tài khoản `test@eshop.com` cho cả luồng đúng lẫn nhánh test lockout, thì ngay khi nhánh lockout làm khóa tài khoản, toàn bộ các VUs đăng nhập đúng khác cũng sẽ bị chặn theo, làm biến dạng kết quả đo lường hiệu năng của luồng chính.
+
+
+---
+
+### Lần 12: Nghiệm thu hoàn tất Giai đoạn 1 (Dữ liệu & Môi trường DB)
+- **Tên công cụ AI**: Antigravity (Gemini 3.8 Flash)
+- **Ngày và giờ**: 2026-11-17 10:57:42
+- **Câu lệnh (Prompt)**:
+  ```text
+  giai đoạn 1 vậy là xong chưa?
+  ```
+- **Kết quả do AI tạo ra**:
+  - Đối soát toàn bộ các tiêu chí nghiệm thu của Giai đoạn 1 trong Action Plan:
+    1. Bộ 3 file CSV Data-Driven (`users.csv`, `profiles.csv`, `lockout_accounts.csv`) đã sẵn sàng tại `performance-tests/data/`, khớp 100% với đặc tả README của eShop SUT.
+    2. Script `reset_db.js` đã hoạt động mượt mà, hỗ trợ mở khóa và đồng bộ tài khoản trước mỗi bài test.
+    3. Môi trường k6 (`v2.4.0`) và backend SQLite đã sẵn sàng thực thi.
+    4. Nhật ký Git commit và AI log đã được cập nhật đầy đủ.
+  - Xác nhận chính thức: **Giai đoạn 1 đã hoàn tất 100%**, sẵn sàng chuyển sang Giai đoạn 2 (Thiết kế kịch bản k6 bằng AI & Phản biện Human Review).
+
+
+---
+
+### Lần 13: Sinh mã kịch bản Load Testing (23120228_Load_20261117.js) và chuẩn bị quy trình Human Review
+- **Tên công cụ AI**: Antigravity (Gemini 3.8 Flash)
+- **Ngày và giờ**: 2026-11-17 11:02:11
+- **Câu lệnh (Prompt)**:
+  ```text
+  oke thực hiện đi, không cần cố ý lộ ra lỗi đâu, cứ làm đi và tui sẽ kiểm tra
+  ```
+- **Kết quả do AI tạo ra**:
+  - Thiết kế và sinh mã kịch bản Load Testing hoàn chỉnh tại `eshop-sut/performance-tests/23120228_Load_20261117.js`.
+  - Tham số hóa tải thực tế: Ramp-up 20s lên 15 VUs, duy trì tải ổn định 1 phút ở 15 VUs, Ramp-down 15s về 0 VUs.
+  - Tích hợp kỹ thuật Data-Driven Testing (DDT): Đọc và phân tích trực tiếp các tệp `data/users.csv`, `data/profiles.csv`, `data/lockout_accounts.csv`.
+  - Bao phủ trọn vẹn luồng E2E:
+    1. **Auth-heavy (Login)**: `POST /api/login` xác thực tài khoản lấy JWT Bearer token.
+    2. **Read-heavy (Profile Query)**: `GET /api/users/me` đọc thông tin cá nhân kèm token.
+    3. **Transactional (Profile Update)**: `PUT /api/users/me` cập nhật thông tin tên, địa chỉ, số điện thoại từ CSV.
+    4. **Auth Branch (Lockout & Security Check)**: Thử nghiệm đăng nhập sai mật khẩu để kiểm chứng phản hồi HTTP 401/403 theo đúng cơ chế lockout.
+  - Tích hợp Custom Metrics (`login_duration`, `profile_read_duration`, `profile_update_duration`, `lockout_duration`) và hệ thống Thresholds theo tiêu chuẩn SLA công nghiệp.
