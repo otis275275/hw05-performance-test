@@ -246,3 +246,40 @@
     3. **Transactional (Profile Update)**: `PUT /api/users/me` cập nhật thông tin tên, địa chỉ, số điện thoại từ CSV.
     4. **Auth Branch (Lockout & Security Check)**: Thử nghiệm đăng nhập sai mật khẩu để kiểm chứng phản hồi HTTP 401/403 theo đúng cơ chế lockout.
   - Tích hợp Custom Metrics (`login_duration`, `profile_read_duration`, `profile_update_duration`, `lockout_duration`) và hệ thống Thresholds theo tiêu chuẩn SLA công nghiệp.
+
+
+---
+
+### Lần 14: Giải thích cơ chế điều phối dữ liệu Round-Robin theo biến môi trường k6 (__VU và __ITER)
+- **Tên công cụ AI**: Antigravity (Gemini 3.8 Flash)
+- **Ngày và giờ**: 2026-11-17 11:12:11
+- **Câu lệnh (Prompt)**:
+  ```text
+  ở đây bạn  xác định cơ chế round robin VU và iteration như thế nào?
+  ```
+- **Kết quả do AI tạo ra**:
+  - Phân tích cơ chế hoạt động của 2 biến ngữ cảnh tích hợp sẵn trong k6:
+    * `__VU` (Virtual User ID): Bắt đầu từ 1, đại diện cho định danh của luồng người dùng ảo đang thực thi.
+    * `__ITER` (Iteration Index): Bắt đầu từ 0, đại diện cho số lượt lặp lại của kịch bản trên VU đó.
+  - Giải thích chi tiết 3 công thức phân phối dữ liệu trong mã nguồn:
+    1. `users[(__VU - 1) % users.length]`: Cố định tài khoản cho từng VU trong suốt phiên làm việc (Sticky user session). VU 1 dùng `test@eshop.com`, VU 2 dùng `admin@eshop.com`, xoay vòng đều cho toàn bộ 15 VUs.
+    2. `profiles[(__ITER + __VU) % profiles.length]`: Kết hợp giữa VU ID và số lượt lặp để tạo độ lệch offset luân phiên. Đảm bảo mỗi lần gửi request Transactional `PUT /me`, mỗi VU sẽ lấy một bộ thông tin hồ sơ khác nhau trong 20 bản ghi, phân tán đều dữ liệu ghi xuống SQLite.
+    3. `lockoutAccounts[(__ITER) % lockoutAccounts.length]`: Luân chuyển tài khoản kiểm thử lockout theo từng đợt lặp.
+
+
+---
+
+### Lần 15: Tiếp thu đề xuất Human Review sử dụng exec.scenario.iterationInTest cho Round-Robin
+- **Tên công cụ AI**: Antigravity (Gemini 3.8 Flash)
+- **Ngày và giờ**: 2026-11-17 11:15:23
+- **Câu lệnh (Prompt)**:
+  ```text
+  ta có thể sử udnjg iterationInTest thay thế không?
+  ```
+- **Kết quả do AI tạo ra**:
+  - Đánh giá cao đề xuất cải tiến của sinh viên: Sử dụng `exec.scenario.iterationInTest` từ module `k6/execution` là giải pháp chuẩn mực và chuyên nghiệp nhất trong k6 hiện đại.
+  - Phân tích ưu điểm vượt trội so với `__ITER`:
+    * `__ITER` chỉ đếm số lần lặp cục bộ của từng VU riêng lẻ (mỗi VU lại bắt đầu từ 0).
+    * `exec.scenario.iterationInTest` là một bộ đếm đơn điệu toàn cục (Globally Unique Monotonic Counter) chạy từ `0` đến `N-1` trên toàn bộ bài test xuyên suốt mọi VUs.
+    * Khi dùng `exec.scenario.iterationInTest % array.length`, việc xoay vòng dữ liệu từ `profiles.csv` và `lockout_accounts.csv` đạt được sự phân bổ đều tuyệt đối 100%, không bao giờ xảy ra va chạm hay lệch pha cục bộ.
+  - Cập nhật mã nguồn `23120228_Load_20261117.js` áp dụng `exec.scenario.iterationInTest` theo đúng đề xuất Human Review.

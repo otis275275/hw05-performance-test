@@ -1,6 +1,7 @@
 import http from 'k6/http';
 import { check, sleep, group } from 'k6';
 import { Trend, Rate, Counter } from 'k6/metrics';
+import exec from 'k6/execution';
 
 // ====================================================================
 // METRIC DEFINITIONS & THRESHOLDS
@@ -60,10 +61,14 @@ const BASE_URL = __ENV.BASE_URL || 'http://localhost:3000';
 export default function () {
   let e2eSuccess = true;
 
-  // Pick deterministic/round-robin test data based on VU and iteration
+  // Globally unique iteration counter across all VUs
+  const globalIter = exec.scenario.iterationInTest;
+
+  // Round-robin selection:
+  // User is sticky per VU, while profile and lockout rotate across global iterations
   const user = users[(__VU - 1) % users.length];
-  const profile = profiles[(__ITER + __VU) % profiles.length];
-  const lockoutAcc = lockoutAccounts[(__ITER) % lockoutAccounts.length];
+  const profile = profiles[globalIter % profiles.length];
+  const lockoutAcc = lockoutAccounts[globalIter % lockoutAccounts.length];
 
   let authToken = '';
 
@@ -180,9 +185,9 @@ export default function () {
 
   // ------------------------------------------------------------------
   // 4. AUTH-HEAVY BRANCH: Account Lockout Testing
-  // Sampled on 20% of iterations to test lockout behavior
+  // Sampled every 5 global iterations to test lockout behavior
   // ------------------------------------------------------------------
-  if (__ITER % 5 === 0) {
+  if (globalIter % 5 === 0) {
     group('04_Auth_LockoutBehavior', function () {
       const badPayload = JSON.stringify({
         email: lockoutAcc.email,
