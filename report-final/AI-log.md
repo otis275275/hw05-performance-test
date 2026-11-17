@@ -664,3 +664,22 @@
   - Ghi nhận và xác thực phản biện hoàn toàn chính xác của sinh viên: Đề bài yêu cầu *"The raw .jtl log files, attached in full — not only the summary"*. Việc trước đó chỉ xuất `summary.json` mới chỉ là bản tóm tắt phân vị (Summary), chưa có nhật ký chi tiết từng request của từng VU theo thời gian thực (Full Raw Request Stream).
   - Phân tích cơ chế kỹ thuật của k6: k6 hỗ trợ cờ `--out csv=<path>` để ghi lại toàn bộ từng sample của mọi VU (timestamp, metric_name, value, status, url, error,...) tương đương 100% với cấu trúc file `.jtl` của JMeter.
   - Kế hoạch thực hiện: Cập nhật `run_scenario.sh` để thêm cờ xuất file Raw CSV chi tiết cho từng kịch bản, đảm bảo hồ sơ nộp bài có cả Full Raw Log (`.csv`/`.jtl`) lẫn Summary JSON (`.json`) và HTML Dashboard.
+
+---
+
+### Lần 37: Thực thi xuất bản Full Raw CSV và Standard JTL Log cho kịch bản Load Test
+- **Tên công cụ AI**: Antigravity (Gemini 3.8 Flash)
+- **Ngày và giờ**: 2026-11-17 20:49:39
+- **Câu lệnh (Prompt)**:
+  ```text
+  có
+  ```
+- **Kết quả do AI tạo ra**:
+  - Cập nhật script thực thi `run_scenario.sh` để thêm cờ `--out "csv=$RAW_DIR/${REPORT_NAME}_raw.csv"`.
+  - Phát triển script bổ trợ `skills/performance-testing/scripts/csv_to_jtl.py` chuyển đổi định dạng stream của k6 sang chuẩn cấu trúc cột `.jtl` truyền thống của Apache JMeter.
+  - Chạy lại kịch bản Load Test thành công (15 VUs, 1m35s):
+    - **Raw CSV Log:** `report-final/raw-logs/23120228_Load_20261117_raw.csv` (14,115 dòng, 2.0 MB) ghi lại từng request sample chi tiết của mọi VU.
+    - **Standard JTL Log:** `report-final/raw-logs/23120228_Load_20261117_raw.jtl` (960 mẫu request đầy đủ timestamp, responseCode, elapsed, threadName).
+    - **Raw JSON Summary:** `report-final/raw-logs/23120228_Load_20261117_summary.json`.
+    - **HTML Dashboard:** `report-final/html-reports/23120228_Load_20261117_dashboard.html`.
+  - Thỏa mãn 100% điều khoản đề bài: *"The raw .jtl log files, attached in full — not only the summary"*.

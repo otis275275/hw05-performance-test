@@ -29,16 +29,24 @@ echo " [STEP 2] Executing k6 Scenario: $REPORT_NAME"
 echo " Script: $SCRIPT_PATH"
 echo " Dashboard Export: $HTML_DIR/${REPORT_NAME}_dashboard.html"
 echo " Raw JSON Summary: $RAW_DIR/${REPORT_NAME}_summary.json"
+echo " Full Raw CSV Log: $RAW_DIR/${REPORT_NAME}_raw.csv"
 echo "=========================================================="
 
 k6 run \
   --out "web-dashboard=export=$HTML_DIR/${REPORT_NAME}_dashboard.html" \
+  --out "csv=$RAW_DIR/${REPORT_NAME}_raw.csv" \
   --summary-export "$RAW_DIR/${REPORT_NAME}_summary.json" \
   "$SCRIPT_PATH"
+
+python3 "$BASE_DIR/skills/performance-testing/scripts/csv_to_jtl.py" \
+  "$RAW_DIR/${REPORT_NAME}_raw.csv" \
+  "$RAW_DIR/${REPORT_NAME}_raw.jtl"
 
 echo "=========================================================="
 echo " [STEP 3] Scenario Completed Successfully!"
 echo " Reports generated at:"
 echo " - HTML: $HTML_DIR/${REPORT_NAME}_dashboard.html"
-echo " - JSON: $RAW_DIR/${REPORT_NAME}_summary.json"
+echo " - JSON Summary: $RAW_DIR/${REPORT_NAME}_summary.json"
+echo " - Full Raw CSV: $RAW_DIR/${REPORT_NAME}_raw.csv"
+echo " - Standard JTL: $RAW_DIR/${REPORT_NAME}_raw.jtl"
 echo "=========================================================="
