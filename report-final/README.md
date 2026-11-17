@@ -5,7 +5,7 @@
 - **Lớp:** CQ2023/31
 - **Công cụ kiểm thử:** k6 (v2.4.0) – Bonus Tool
 - **Hệ thống kiểm thử (SUT):** eShop (Node.js/Express + SQLite)
-- **Kho lưu trữ GitHub:** [Software-Testing-Seminar-Group10](https://github.com/HuynhDucThinh/Software-Testing-Seminar-Group10)
+- **Kho lưu trữ GitHub:** [hw05-performance-test](https://github.com/otis275275/hw05-performance-test)
 - **Liên kết Video Demo Thuyết minh (YouTube):** *[Cập nhật link video YouTube Unlisted của bạn]*
 
 ---

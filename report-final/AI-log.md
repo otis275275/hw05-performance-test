@@ -551,3 +551,19 @@
     2. **PERF-01 (Mức độ Medium - Điểm nghẽn CSDL):** SQLite mặc định Rollback Journal gây nghẽn khóa toàn bảng (Exclusive lock contention) khi 100 VUs cùng ghi `PUT /api/users/me`. Đề xuất giải pháp WAL mode (`PRAGMA journal_mode = WAL;`).
     3. **PERF-02 (Mức độ Medium - Tối ưu hóa truy vấn):** Thiếu B-Tree Index trên cột `users(email)`, gây Full Table Scan $O(N)$ trên mỗi thao tác đăng nhập. Đề xuất thêm `CREATE INDEX idx_users_email ON users(email);`.
   - Làm rõ với sinh viên: Theo barem đề bài, bạn chỉ cần tạo ít nhất **1 issue chính (BUG-01)** lên GitHub Issues là đã đáp ứng trọn vẹn yêu cầu chấm điểm, hoặc có thể tạo cả 3 để đạt điểm tuyệt đối.
+
+---
+
+### Lần 31: Thiết lập Git Remote sang cá nhân hóa GitHub Repository của sinh viên
+- **Tên công cụ AI**: Antigravity (Gemini 3.8 Flash)
+- **Ngày và giờ**: 2026-11-17 14:29:25
+- **Câu lệnh (Prompt)**:
+  ```text
+  bây giờ dỗn hết những gì ta làm lên git remote add origin https://github.com/otis275275/hw05-performance-test.git
+  ```
+- **Kết quả do AI tạo ra**:
+  - Đổi tên remote `origin` cũ thành `upstream` (trỏ về repo seminar nhóm).
+  - Thêm remote `origin` mới trỏ về `https://github.com/otis275275/hw05-performance-test.git`.
+  - Cập nhật liên kết kho lưu trữ GitHub chính thức trong `MAIN_REPORT.md`, `README.md` sang repo cá nhân `https://github.com/otis275275/hw05-performance-test`.
+  - Xuất lại `MAIN_REPORT.pdf` và `AI-log.pdf`.
+  - Chuẩn bị commit và lệnh `git push -u origin main` để đẩy toàn bộ nhánh lên GitHub cá nhân.

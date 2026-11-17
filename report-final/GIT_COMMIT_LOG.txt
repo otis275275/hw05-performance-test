@@ -1,4 +1,9 @@
-* 720f8b1 (HEAD -> main) docs(defense): add bug report and oral defense preparation guide with PDF exports
+* 4781fe1 (HEAD -> main) chore(repo): update submission GitHub repository URL to otis275275/hw05-performance-test
+* 6d4e34b docs(audit): log Turn 30 classifying recorded bugs and performance issues
+* dfa5151 docs(audit): log Turn 29 guidance for GitHub Issues creation and screenshots
+* bb71f61 docs(audit): log Turn 28 inventory review against grading rubric
+* 7cce3cf docs(audit): log Turn 27 explaining Task 2 verification procedure
+* 8674f3a docs(defense): add bug report and oral defense preparation guide with PDF exports
 * e902d6d docs(submission): export PDF reports and generate submission README with self-assessment
 * 6db3024 docs(report): finalize formal MAIN_REPORT covering Task 1, Task 2, Task 3, and AI Critique
 * 9f3118a test(endurance): complete 10-min soak test, establish hardware threshold and memory ceiling
@@ -10,7 +15,4 @@
 * 99cceba fix(test-data): align CSV datasets and credentials strictly with SUT README specification
 * 52372ff feat(test-data): prepare data-driven CSV datasets and auto-reset script for performance tests
 * 6167c9e feat(agent-skill): initialize performance testing skill and audit log for HW05
-* d63fed5 (origin/main, origin/HEAD) test(k6): execute Demo03 coupon cases and report verified failures
-*   b99f572 Merge pull request #14 from HuynhDucThinh/docs/update-slides
-|\  
-| * 1f92322 (origin/docs/update-slides) docs: update slides for seminar
+* d63fed5 (upstream/main, upstream/HEAD) test(k6): execute Demo03 coupon cases and report verified failures

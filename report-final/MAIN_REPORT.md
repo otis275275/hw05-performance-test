@@ -8,7 +8,7 @@
 - **Giảng viên & TAs phụ trách:** TS. Lâm Quang Vũ / TS. Trần Duy Hoàng / ThS. Trần Thị Bích Hạnh / ThS. Trương Phước Lộc / ThS. Hồ Tuấn Thanh
 - **Công cụ kiểm thử chính:** **k6 (v2.4.0)** – Được cộng điểm thưởng (Bonus)
 - **Hệ thống kiểm thử (SUT):** eShop Demo Application (Node.js/Express + SQLite)
-- **Kho lưu trữ GitHub:** [Software-Testing-Seminar-Group10](https://github.com/HuynhDucThinh/Software-Testing-Seminar-Group10)
+- **Kho lưu trữ GitHub:** [hw05-performance-test](https://github.com/otis275275/hw05-performance-test)
 - **Video Demo Thuyết minh (YouTube):** *[Cập nhật liên kết Video Unlisted của bạn]*
 
 ---
