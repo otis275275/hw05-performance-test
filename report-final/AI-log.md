@@ -504,3 +504,20 @@
     3. **Lập Bảng Săn lỗi AI (Misinterpretation Hunt):** Đối soát 3 lỗi sai thực tế với số liệu chuẩn trong log file thô (sử dụng script `audit_metrics.py`).
     4. **Thẩm định 4 đề xuất tối ưu hóa (Feasible vs Hallucinated):** Phản biện chuyên sâu giữa giải pháp thực tế (Index, SQLite WAL) và ảo giác kỹ thuật (Connection pool cho SQLite, Kafka/Redis microservices).
   - Hướng dẫn sinh viên câu lệnh CLI để tự tay chạy đối soát độc lập các thông số.
+
+---
+
+### Lần 28: Rà soát tổng thể toàn bộ barem chấm điểm và danh mục bàn giao
+- **Tên công cụ AI**: Antigravity (Gemini 3.8 Flash)
+- **Ngày và giờ**: 2026-11-17 14:22:26
+- **Câu lệnh (Prompt)**:
+  ```text
+  vậy ta còn gì chưa thực hiện nữa không
+  ```
+- **Kết quả do AI tạo ra**:
+  - Đối soát 100% barem chấm điểm theo đặc tả `2026.HW05.Performance Testing_En.md`:
+    - **Phía AI/Codebase (Đã hoàn thành 100%):** Kịch bản kiểm thử (Load, Stress, Spike, Endurance); dữ liệu CSV Data-driven; 3 view báo cáo (Terminal, JSON thô, HTML Dashboard); Task 2 Săn lỗi AI; Task 3 Continuous Testing Proposal; Agent Skill 6 bước; AI Critique 250 từ; Báo cáo lỗi BUG_REPORT (MD + PDF); Cẩm nang vấn đáp ORAL_DEFENSE_GUIDE (MD + PDF); Báo cáo chính MAIN_REPORT (MD + PDF); Git commit log (13 commits); Gói nộp bài zip 100 điểm.
+    - **Phía người dùng thực hiện (Action Items của bạn):**
+      1. Quay video demo $\ge 6$ phút thuyết minh tiếng Việt có khung hình terminal k6 và htop/resource monitor, đăng lên YouTube (Unlisted).
+      2. Cung cấp link YouTube để AI điền vào `README.md`, `MAIN_REPORT.md` và cập nhật lại file zip cuối cùng.
+      3. Thực hiện `git push` lên GitHub remote repository.
