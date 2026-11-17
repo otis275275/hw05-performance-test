@@ -153,3 +153,40 @@
     3. `lockout_accounts.csv`: Chứa thông tin tài khoản dùng để kích hoạt ngưỡng khóa sau 3 lần sai mật khẩu (`403 Forbidden`).
   - Nâng cấp script `reset_db.js` để tự động gỡ khóa và seed đồng bộ 20 tài khoản này vào cơ sở dữ liệu SQLite `database.sqlite`.
   - Thực thi reset và xác minh toàn bộ dữ liệu mẫu đã sẵn sàng trong database.
+
+
+---
+
+### Lần 9: Phản biện tài khoản mặc định theo README SUT và cơ chế tương thích dữ liệu
+- **Tên công cụ AI**: Antigravity (Gemini 3.8 Flash)
+- **Ngày và giờ**: 2026-11-17 09:42:39
+- **Câu lệnh (Prompt)**:
+  ```text
+  tại sao các csv dù là password đúng nhưng nó vẫn sai theo readme? readme có cung cấp các tài khoản sẵn đso
+  ```
+- **Kết quả do AI tạo ra**:
+  - Đối soát tài liệu `eshop-sut/README.md` (Mục 1, dòng 21-25) và file khởi tạo `backend/database.js` (dòng 90-95):
+    - Tài khoản mặc định duy nhất được SUT cung cấp sẵn từ đầu là:
+      * Admin: `admin@eshop.com` / `Admin123!`
+      * User: `test@eshop.com` / `Test1234!`
+  - Phân tích rủi ro tương thích: Nếu mang kịch bản test nộp bài mà TAs chỉ chạy lệnh gốc `node database.js` (reset DB về ban đầu của repository) mà không chạy seed mở rộng, thì các tài khoản tự sinh như `user01@eshop.com` sẽ bị lỗi `401 Unauthorized` (do tài khoản chưa từng tồn tại trong DB gốc).
+  - Thống nhất giải pháp chuẩn hóa dữ liệu:
+    1. Đưa tài khoản chuẩn từ README (`test@eshop.com` / `Test1234!`) làm tài khoản cốt lõi trong `users.csv`.
+    2. Trong kịch bản test hoặc script khởi tạo, hỗ trợ tự động đăng ký (`POST /api/register`) nếu tài khoản chưa có trong DB, hoặc tận dụng tài khoản chuẩn sẵn có để đảm bảo kịch bản chạy độc lập thành công 100% trên bất kỳ máy nào của giảng viên.
+
+
+---
+
+### Lần 10: Cập nhật tệp dữ liệu CSV chuẩn hóa theo tài khoản mặc định của SUT README
+- **Tên công cụ AI**: Antigravity (Gemini 3.8 Flash)
+- **Ngày và giờ**: 2026-11-17 09:45:08
+- **Câu lệnh (Prompt)**:
+  ```text
+  oke cập nhập đi
+  ```
+- **Kết quả do AI tạo ra**:
+  - Tái cấu trúc lại tệp `performance-tests/data/users.csv` sử dụng trực tiếp các tài khoản gốc được đặc tả trong README:
+    * `test@eshop.com` / `Test1234!` (User chuẩn)
+    * `admin@eshop.com` / `Admin123!` (Admin)
+  - Cập nhật tệp `performance-tests/data/lockout_accounts.csv` sử dụng tài khoản `test@eshop.com` với mật khẩu sai `WrongPass123!` nhằm kích hoạt đúng cơ chế khóa tài khoản theo FR-02.
+  - Tối ưu script `skills/performance-testing/scripts/reset_db.js` để bảo đảm phục hồi tài khoản chuẩn và mở khóa sau mỗi vòng lặp kiểm thử.
