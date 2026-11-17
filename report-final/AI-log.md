@@ -631,3 +631,22 @@
     5. Độ trễ từng Endpoint: `login_duration.p(95) = 2.80 ms`, `profile_read_duration.p(95) = 2.50 ms`, `profile_update_duration.p(95) = 13.18 ms`, `lockout_duration.p(95) = 2.29 ms`.
     6. Tỷ lệ thành công E2E: `e2e_success_rate.value = 1` (100%).
   - Hướng dẫn cả 2 cách đối soát trực quan: mở file JSON và chạy script CLI `audit_metrics.py`.
+
+---
+
+### Lần 35: Giải thích sự tương đương giữa file `.jtl` của JMeter và log thô của k6
+- **Tên công cụ AI**: Antigravity (Gemini 3.8 Flash)
+- **Ngày và giờ**: 2026-11-17 20:36:53
+- **Câu lệnh (Prompt)**:
+  ```text
+  ở task 1@[/home/sv/Downloads/seminar testing/Software-Testing-Seminar-Group10/eshop-sut/2026.HW05.Performance Testing_En.md] đề bảo có file jil nhưng ta sử dụng k6 thì thay bằng gì vậy
+  ```
+- **Kết quả do AI tạo ra**:
+  - Phân tích nguồn gốc thuật ngữ: `.jtl` (JMeter Test Log) là định dạng file nhật ký thô mặc định của công cụ truyền thống **Apache JMeter**, ghi lại từng mẫu request với timestamp, mã phản hồi, độ trễ và số byte truyền tải.
+  - Đối chiếu với công cụ **Grafana k6 (Bonus Tool)**:
+    1. **Kịch bản test:** Thay vì file XML `.jmx` của JMeter, k6 sử dụng mã JavaScript tiêu chuẩn ES6 (`.js`).
+    2. **Báo cáo HTML:** Thay cho dashboard JMeter, k6 sử dụng file HTML tương tác độc lập (`_dashboard.html`).
+    3. **File log thô tương đương `.jtl`:**
+       - Bản tổng hợp toán học chi tiết (Summary Metrics): File `summary.json` ghi nhận đầy đủ các phân vị p50, p90, p95, p99, min, max, throughput và error rate.
+       - Nhật ký từng request chi tiết (Full Request Stream): k6 hỗ trợ xuất qua cờ `--out csv=...` hoặc `--out json=...`.
+  - Khẳng định: Trong hồ sơ nộp bài, các file log thô lưu tại `report-final/raw-logs/` (như `23120228_Load_20261117_summary.json`) chính là bằng chứng dữ liệu gốc thay thế hoàn hảo và chuẩn mực cho file `.jtl` khi kiểm thử bằng k6.
