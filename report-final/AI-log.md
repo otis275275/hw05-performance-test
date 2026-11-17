@@ -650,3 +650,17 @@
        - Bản tổng hợp toán học chi tiết (Summary Metrics): File `summary.json` ghi nhận đầy đủ các phân vị p50, p90, p95, p99, min, max, throughput và error rate.
        - Nhật ký từng request chi tiết (Full Request Stream): k6 hỗ trợ xuất qua cờ `--out csv=...` hoặc `--out json=...`.
   - Khẳng định: Trong hồ sơ nộp bài, các file log thô lưu tại `report-final/raw-logs/` (như `23120228_Load_20261117_summary.json`) chính là bằng chứng dữ liệu gốc thay thế hoàn hảo và chuẩn mực cho file `.jtl` khi kiểm thử bằng k6.
+
+---
+
+### Lần 36: Tiếp thu phản hồi về việc xuất Raw CSV / JTL Log chi tiết từng VU trong k6
+- **Tên công cụ AI**: Antigravity (Gemini 3.8 Flash)
+- **Ngày và giờ**: 2026-11-17 20:40:44
+- **Câu lệnh (Prompt)**:
+  ```text
+  tui tưởng là ta giả lập bao nhiêu VU thì đều khi log vào, ta dùng k6 thì phải ra file csv
+  ```
+- **Kết quả do AI tạo ra**:
+  - Ghi nhận và xác thực phản biện hoàn toàn chính xác của sinh viên: Đề bài yêu cầu *"The raw .jtl log files, attached in full — not only the summary"*. Việc trước đó chỉ xuất `summary.json` mới chỉ là bản tóm tắt phân vị (Summary), chưa có nhật ký chi tiết từng request của từng VU theo thời gian thực (Full Raw Request Stream).
+  - Phân tích cơ chế kỹ thuật của k6: k6 hỗ trợ cờ `--out csv=<path>` để ghi lại toàn bộ từng sample của mọi VU (timestamp, metric_name, value, status, url, error,...) tương đương 100% với cấu trúc file `.jtl` của JMeter.
+  - Kế hoạch thực hiện: Cập nhật `run_scenario.sh` để thêm cờ xuất file Raw CSV chi tiết cho từng kịch bản, đảm bảo hồ sơ nộp bài có cả Full Raw Log (`.csv`/`.jtl`) lẫn Summary JSON (`.json`) và HTML Dashboard.
