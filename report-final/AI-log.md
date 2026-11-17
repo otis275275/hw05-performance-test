@@ -463,3 +463,27 @@
     5. Agent Skill: Trình bày quy trình 6 bước S1-S6 và bộ 3 script bổ trợ.
     6. Đoạn phê bình AI Critique (250 từ) bắt buộc.
     7. Bảng tự chấm điểm (Self-Assessment Table 100/100).
+
+
+---
+
+### Lần 26: Hoàn thiện Hồ sơ Bug Report, Chuẩn bị Vấn đáp (Oral Defense) và Cập nhật Đóng gói Nộp bài
+- **Tên công cụ AI**: Antigravity (Gemini 3.8 Flash)
+- **Ngày và giờ**: 2026-11-17 14:08:42
+- **Câu lệnh (Prompt)**:
+  ```text
+  quay video tui sẽ quay sau, move sang việc tiếp theo
+  ```
+- **Kết quả do AI tạo ra**:
+  - Ghi nhận kế hoạch người dùng sẽ chủ động quay video thuyết minh demo sau.
+  - Hoàn thiện trọn vẹn 3 hạng mục trọng điểm phục vụ thẩm định và nộp bài:
+    1. **Soạn thảo Hồ sơ Báo cáo Lỗi & Sự cố Hiệu năng ([BUG_REPORT.md](BUG_REPORT.md) / [BUG_REPORT.pdf](BUG_REPORT.pdf)):**
+       - **BUG-01 (Chức năng/Bảo mật):** Phát hiện lỗi nghiêm trọng tại dòng 54 file `eshop-sut/backend/server.js` (`user.login_attempts + 2`), khiến tài khoản bị khóa sau chỉ **2 lần** nhập sai mật khẩu thay vì 3 lần theo đặc tả FR-02. Cung cấp mã nguồn phân tích, kịch bản tái hiện và giải pháp sửa lỗi.
+       - **PERF-01 (Hiệu năng):** Phân tích sự cố nghẽn khóa toàn bảng SQLite (Table lock contention) khi chịu tải 100 VUs ghi đồng thời (`PUT /api/users/me`), độ trễ p95 tăng từ 2ms lên 13-50ms; đề xuất kích hoạt chế độ WAL (`PRAGMA journal_mode = WAL;`) và đánh chỉ mục `users(email)`.
+       - **PERF-02 (Cấu hình bảo mật):** Xung tải Spike Test kích hoạt cơ chế khóa tài khoản tạm thời (403 Forbidden) cho 98 requests tiếp theo.
+    2. **Xây dựng Cẩm nang Chuẩn bị Vấn đáp Bảo vệ ([ORAL_DEFENSE_GUIDE.md](ORAL_DEFENSE_GUIDE.md) / [ORAL_DEFENSE_GUIDE.pdf](ORAL_DEFENSE_GUIDE.pdf)):**
+       - Soạn bộ 8 câu hỏi - câu trả lời kỹ thuật cốt lõi (5–7 phút) theo barem đánh giá Mục 13: kiến trúc k6 vs JMeter, cơ chế zero-copy của `SharedArray`, tính chất tăng đơn điệu toàn cục của `exec.scenario.iterationInTest`, xử lý threshold HTTP 401/403 negative testing, phân tích SQLite concurrency, phát hiện bug SUT `server.js`, minh chứng Zero Memory Leak qua Endurance test và tiêu chí phát hiện hồi quy $\Delta \text{p95} > 20\%$.
+       - Đính kèm Bảng thông số vàng (Cheat Sheet) giúp sinh viên phản xạ nhanh các chỉ số định lượng.
+    3. **Cập nhật Báo cáo Nộp bài ([README.md](README.md)):**
+       - Bổ sung danh mục toàn bộ tài liệu nộp bài và các liên kết kiểm thử.
+       - Xuất bản phiên bản PDF cho toàn bộ tài liệu Markdown (`MAIN_REPORT.pdf`, `AI-log.pdf`, `BUG_REPORT.pdf`, `ORAL_DEFENSE_GUIDE.pdf`).

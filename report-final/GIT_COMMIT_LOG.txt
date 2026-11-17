@@ -1,4 +1,6 @@
-* 6db3024 (HEAD -> main) docs(report): finalize formal MAIN_REPORT covering Task 1, Task 2, Task 3, and AI Critique
+* 720f8b1 (HEAD -> main) docs(defense): add bug report and oral defense preparation guide with PDF exports
+* e902d6d docs(submission): export PDF reports and generate submission README with self-assessment
+* 6db3024 docs(report): finalize formal MAIN_REPORT covering Task 1, Task 2, Task 3, and AI Critique
 * 9f3118a test(endurance): complete 10-min soak test, establish hardware threshold and memory ceiling
 * d5f8e03 test(evidence): execute Load, Stress, and Spike tests, generate HTML dashboards and raw JSON logs
 * c0d3292 feat(test-plans): add Stress, Spike, and Endurance k6 test plans with SharedArray and iterationInTest
@@ -12,6 +14,3 @@
 *   b99f572 Merge pull request #14 from HuynhDucThinh/docs/update-slides
 |\  
 | * 1f92322 (origin/docs/update-slides) docs: update slides for seminar
-| *   1f6f274 Merge branch 'main' of https://github.com/HuynhDucThinh/Software-Testing-Seminar-Group10 # Please enter a commit message to explain why this merge is necessary, # especially if it merges an updated upstream into a topic branch. # # Lines starting with '#' will be ignored, and an empty message aborts # the commit.
-| |\  
-| * | 25ab310 docs: update slides

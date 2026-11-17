@@ -35,9 +35,27 @@ Luồng nghiệp vụ End-to-End (E2E) kết nối trọn vẹn cả 3 nhóm end
 
 ---
 
-### 1.4. Phát hiện Sự cố & Hành vi Bất thường (Issues Found)
-* **Issue 1 (Spike Transient Lockout):** Dưới xung tải 80 VUs, các request sai mật khẩu gửi dồn dập đã kích hoạt cờ khóa 3 phút cho tài khoản kiểm thử, dẫn đến 98 request login đúng tiếp theo nhận mã `403 Forbidden` (chiếm 4.43% tổng request). Sau khi hạ tải, hệ thống tự phục hồi 100%.
-* **Issue 2 (SQLite Table Lock Contention):** Khi 100 VUs cùng thực hiện Transactional `PUT /me`, độ trễ ghi tăng từ ~2ms lên ~13ms do cơ chế khóa file tuần tự của SQLite. Đề xuất kích hoạt WAL mode (`PRAGMA journal_mode = WAL;`) để tối ưu hóa.
+### 1.4. Phát hiện Sự cố & Hồ sơ Tài liệu Bổ trợ (Bugs & Supporting Docs)
+* **BUG-01 (Sai logic đếm số lần đăng nhập):** `server.js:54` cộng `login_attempts + 2` khiến tài khoản bị khóa sau chỉ 2 lần sai mật khẩu thay vì 3 lần theo đặc tả FR-02. Chi tiết tại [BUG_REPORT.md](file:///home/sv/Downloads/seminar%20testing/Software-Testing-Seminar-Group10/eshop-sut/report-final/BUG_REPORT.md) / [BUG_REPORT.pdf](file:///home/sv/Downloads/seminar%20testing/Software-Testing-Seminar-Group10/eshop-sut/report-final/BUG_REPORT.pdf).
+* **PERF-01 (SQLite Table Lock Contention):** Khóa độc quyền khi ghi đồng thời 100 VUs. Đề xuất bật `PRAGMA journal_mode = WAL;`.
+* **Cẩm nang Vấn đáp (Oral Defense Guide):** Bộ câu hỏi & trả lời kỹ thuật chuyên sâu (k6 vs JMeter, `SharedArray`, Go engine, SQLite concurrency, CI/CD regression detection) tại [ORAL_DEFENSE_GUIDE.md](file:///home/sv/Downloads/seminar%20testing/Software-Testing-Seminar-Group10/eshop-sut/report-final/ORAL_DEFENSE_GUIDE.md) / [ORAL_DEFENSE_GUIDE.pdf](file:///home/sv/Downloads/seminar%20testing/Software-Testing-Seminar-Group10/eshop-sut/report-final/ORAL_DEFENSE_GUIDE.pdf).
+
+---
+
+### 1.5. Danh mục Hồ sơ Nộp bài (Submission Deliverables)
+1. **Báo cáo chính:** [MAIN_REPORT.md](file:///home/sv/Downloads/seminar%20testing/Software-Testing-Seminar-Group10/eshop-sut/report-final/MAIN_REPORT.md) & [MAIN_REPORT.pdf](file:///home/sv/Downloads/seminar%20testing/Software-Testing-Seminar-Group10/eshop-sut/report-final/MAIN_REPORT.pdf)
+2. **Nhật ký AI tương tác (AI Audit Log):** [AI-log.md](file:///home/sv/Downloads/seminar%20testing/Software-Testing-Seminar-Group10/eshop-sut/report-final/AI-log.md) & [AI-log.pdf](file:///home/sv/Downloads/seminar%20testing/Software-Testing-Seminar-Group10/eshop-sut/report-final/AI-log.pdf)
+3. **Báo cáo Lỗi & Hiệu năng:** [BUG_REPORT.md](file:///home/sv/Downloads/seminar%20testing/Software-Testing-Seminar-Group10/eshop-sut/report-final/BUG_REPORT.md) & [BUG_REPORT.pdf](file:///home/sv/Downloads/seminar%20testing/Software-Testing-Seminar-Group10/eshop-sut/report-final/BUG_REPORT.pdf)
+4. **Hướng dẫn Vấn đáp Bảo vệ:** [ORAL_DEFENSE_GUIDE.md](file:///home/sv/Downloads/seminar%20testing/Software-Testing-Seminar-Group10/eshop-sut/report-final/ORAL_DEFENSE_GUIDE.md) & [ORAL_DEFENSE_GUIDE.pdf](file:///home/sv/Downloads/seminar%20testing/Software-Testing-Seminar-Group10/eshop-sut/report-final/ORAL_DEFENSE_GUIDE.pdf)
+5. **Kịch bản kiểm thử (Performance Tests):**
+   - [23120228_Load_20261117.js](file:///home/sv/Downloads/seminar%20testing/Software-Testing-Seminar-Group10/eshop-sut/performance-tests/23120228_Load_20261117.js)
+   - [23120228_Stress_20261117.js](file:///home/sv/Downloads/seminar%20testing/Software-Testing-Seminar-Group10/eshop-sut/performance-tests/23120228_Stress_20261117.js)
+   - [23120228_Spike_20261117.js](file:///home/sv/Downloads/seminar%20testing/Software-Testing-Seminar-Group10/eshop-sut/performance-tests/23120228_Spike_20261117.js)
+   - [23120228_Endurance_20261117.js](file:///home/sv/Downloads/seminar%20testing/Software-Testing-Seminar-Group10/eshop-sut/performance-tests/23120228_Endurance_20261117.js)
+6. **Báo cáo trực quan & Dữ liệu thô:**
+   - [Thư mục HTML Reports (4 scenarios)](file:///home/sv/Downloads/seminar%20testing/Software-Testing-Seminar-Group10/eshop-sut/report-final/html-reports/)
+   - [Thư mục Raw JSON Logs (4 scenarios)](file:///home/sv/Downloads/seminar%20testing/Software-Testing-Seminar-Group10/eshop-sut/report-final/raw-logs/)
+7. **Lịch sử Git:** [GIT_COMMIT_LOG.txt](file:///home/sv/Downloads/seminar%20testing/Software-Testing-Seminar-Group10/eshop-sut/report-final/GIT_COMMIT_LOG.txt)
 
 ---
 
