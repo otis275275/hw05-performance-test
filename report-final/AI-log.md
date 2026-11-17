@@ -713,3 +713,21 @@
     2. **Spike Test (80 VUs):** Hoàn tất xuất `23120228_Spike_20261117_raw.csv` và `23120228_Spike_20261117_raw.jtl` (2,210 requests).
     3. **Endurance Test (25 VUs trong 11 phút):** Đang thực thi ngâm tải để thu thập trọn vẹn từng điểm đo request theo thời gian thực.
   - Đảm bảo 100% các kịch bản đều có đầy đủ bộ tứ file bằng chứng: Raw CSV, Standard JTL, Summary JSON và HTML Dashboard.
+
+---
+
+### Lần 40: Hoàn tất 100% việc sinh và chuẩn hóa Raw CSV và JTL Log cho cả 4 kịch bản
+- **Tên công cụ AI**: Antigravity (Gemini 3.8 Flash)
+- **Ngày và giờ**: 2026-11-17 21:15:34
+- **Câu lệnh (Prompt)**:
+  ```text
+  [Hoàn tất chạy kịch bản Endurance Test và đồng bộ toàn bộ file log thô]
+  ```
+- **Kết quả do AI tạo ra**:
+  - Bài kiểm thử Endurance Test (ngâm tải 25 VUs trong 11 phút) kết thúc hoàn hảo:
+    - Xử lý thành công **12,608 requests** (19.04 req/s) với tỷ lệ lỗi **0.00%**.
+    - Xuất file Full Raw CSV: `23120228_Endurance_20261117_raw.csv` (26 MB).
+    - Xuất file Standard JTL: `23120228_Endurance_20261117_raw.jtl` (1.6 MB, 12,608 samples).
+    - Xuất file Summary JSON: `23120228_Endurance_20261117_summary.json`.
+    - Xuất file HTML Dashboard: `23120228_Endurance_20261117_dashboard.html`.
+  - Toàn bộ 4 kịch bản (Load, Stress, Spike, Endurance) hiện đã có đầy đủ 100% cả 4 định dạng bằng chứng: Raw CSV, Standard JTL, Summary JSON, và HTML Dashboard.
