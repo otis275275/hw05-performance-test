@@ -1,0 +1,19 @@
+* 9f3118a (HEAD -> main) test(endurance): complete 10-min soak test, establish hardware threshold and memory ceiling
+* d5f8e03 test(evidence): execute Load, Stress, and Spike tests, generate HTML dashboards and raw JSON logs
+* c0d3292 feat(test-plans): add Stress, Spike, and Endurance k6 test plans with SharedArray and iterationInTest
+* 6f61b62 refactor(load-test): integrate SharedArray for zero-copy memory optimization across VUs (Human Review)
+* 77e8fee refactor(load-test): adopt exec.scenario.iterationInTest for global round-robin distribution (Human Review)
+* b9288b8 feat(load-test): create AI-assisted load test plan 23120228_Load_20261117.js
+* 99cceba fix(test-data): align CSV datasets and credentials strictly with SUT README specification
+* 52372ff feat(test-data): prepare data-driven CSV datasets and auto-reset script for performance tests
+* 6167c9e feat(agent-skill): initialize performance testing skill and audit log for HW05
+* d63fed5 (origin/main, origin/HEAD) test(k6): execute Demo03 coupon cases and report verified failures
+*   b99f572 Merge pull request #14 from HuynhDucThinh/docs/update-slides
+|\  
+| * 1f92322 (origin/docs/update-slides) docs: update slides for seminar
+| *   1f6f274 Merge branch 'main' of https://github.com/HuynhDucThinh/Software-Testing-Seminar-Group10 # Please enter a commit message to explain why this merge is necessary, # especially if it merges an updated upstream into a topic branch. # # Lines starting with '#' will be ignored, and an empty message aborts # the commit.
+| |\  
+| * | 25ab310 docs: update slides
+* | | 7ccffc0 docs(k6): add Demo03 agent workflow, evidence and final report
+| |/  
+|/|   
