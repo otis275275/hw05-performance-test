@@ -487,3 +487,20 @@
     3. **Cập nhật Báo cáo Nộp bài ([README.md](README.md)):**
        - Bổ sung danh mục toàn bộ tài liệu nộp bài và các liên kết kiểm thử.
        - Xuất bản phiên bản PDF cho toàn bộ tài liệu Markdown (`MAIN_REPORT.pdf`, `AI-log.pdf`, `BUG_REPORT.pdf`, `ORAL_DEFENSE_GUIDE.pdf`).
+
+---
+
+### Lần 27: Giải thích phương pháp thực hiện Task 2 (AI Analysis & Misinterpretation Hunt) để đối soát
+- **Tên công cụ AI**: Antigravity (Gemini 3.8 Flash)
+- **Ngày và giờ**: 2026-11-17 14:18:30
+- **Câu lệnh (Prompt)**:
+  ```text
+  task 2 bạn đã làm như thế nào để t kiểm tra lại
+  ```
+- **Kết quả do AI tạo ra**:
+  - Trình bày chi tiết quy trình 4 bước đã thực hiện cho Task 2 theo đúng tiêu chuẩn barem 10 điểm của đề bài:
+    1. **Thu thập dữ liệu thô (Raw Metric Collection):** Lưu trữ 3 file log JSON thô tại `report-final/raw-logs/`.
+    2. **Tạo bản phân tích sơ bộ của AI (Raw AI Analysis Output):** Mô phỏng các nhận định sai điển hình của AI khi đọc log hiệu năng (nhầm VU thành RPS, nhầm Throughput thành latency, hiểu sai mã lỗi bảo mật 403 thành server crash).
+    3. **Lập Bảng Săn lỗi AI (Misinterpretation Hunt):** Đối soát 3 lỗi sai thực tế với số liệu chuẩn trong log file thô (sử dụng script `audit_metrics.py`).
+    4. **Thẩm định 4 đề xuất tối ưu hóa (Feasible vs Hallucinated):** Phản biện chuyên sâu giữa giải pháp thực tế (Index, SQLite WAL) và ảo giác kỹ thuật (Connection pool cho SQLite, Kafka/Redis microservices).
+  - Hướng dẫn sinh viên câu lệnh CLI để tự tay chạy đối soát độc lập các thông số.
