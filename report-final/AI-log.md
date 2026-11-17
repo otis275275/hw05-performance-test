@@ -391,3 +391,40 @@
     2. **Stress Test (100 VUs, 1m55s)**: 5,124 requests, 43.23 RPS, p95 = 7.58ms, Error Rate = 0.00%, E2E Success = 100%.
     3. **Spike Test (80 VUs sốc tải, 1m15s)**: 2,210 requests, 29.18 RPS, p95 = 6.60ms, Error Rate = 4.43% (khi tài khoản test tạm thời bị khóa do chạm ngưỡng lockout lúc sốc tải đỉnh và tự hồi phục về bình thường).
   - Xuất đầy đủ 3 bộ báo cáo Web-Dashboard HTML tương tác vào `report-final/html-reports/` và 3 file JSON metric thô vào `report-final/raw-logs/`.
+
+
+---
+
+### Lần 22: Khởi chạy kịch bản Endurance Testing 10 phút và chuẩn bị Task 2 (AI Analysis & Misinterpretation Hunt)
+- **Tên công cụ AI**: Antigravity (Gemini 3.8 Flash)
+- **Ngày và giờ**: 2026-11-17 13:42:04
+- **Câu lệnh (Prompt)**:
+  ```text
+  oke
+  ```
+- **Kết quả do AI tạo ra**:
+  - Kích hoạt chạy kịch bản **Endurance Testing (`23120228_Endurance_20261117.js`)** trong nền (25 VUs trong 10 phút) nhằm tìm ngưỡng bền bỉ phần cứng tối đa (Max Stable RPS và Memory Ceiling).
+  - Khởi tạo quy trình Task 2 (AI Analysis & Misinterpretation Hunt):
+    1. Đưa dữ liệu thô cho AI đóng vai trò phân tích sơ bộ và gợi ý ngưỡng.
+    2. Đóng vai trò sinh viên kiểm định (Human Review) phát hiện các điểm sai lệch điển hình mà AI hay suy diễn (như đọc nhầm tỷ lệ lỗi Spike, nhầm lẫn giữa p95 và avg, hoặc nhầm lẫn đơn vị ms/giây).
+    3. Đánh giá tính khả thi của các đề xuất tối ưu hóa (Phân loại rõ ràng Feasible vs Hallucinated).
+
+
+---
+
+### Lần 23: Hoàn tất Endurance Test (11 phút) và xác định ngưỡng phần cứng thực nghiệm
+- **Tên công cụ AI**: Antigravity (Gemini 3.8 Flash)
+- **Ngày và giờ**: 2026-11-17 13:54:00
+- **Câu lệnh (Prompt)**:
+  ```text
+  [Hoàn tất tiến trình chạy ngâm Endurance Testing từ task-404]
+  ```
+- **Kết quả do AI tạo ra**:
+  - Thu thập kết quả thực thi Endurance Test (25 VUs ngâm liên tục trong 10 phút, tổng thời gian 11 phút):
+    * Tổng số HTTP requests: **12,602 requests**
+    * Thông lượng duy trì: **19.02 req/s**
+    * Tỷ lệ thành công E2E: **100.00%** (3,938 / 3,938 lượt)
+    * Tỷ lệ lỗi: **0.00%** (0 / 12,602 requests)
+    * Độ trễ p95 toàn cục: **11.28 ms** (Độ trôi trần so với phút đầu là 0ms, không có dấu hiệu suy thoái).
+    * Bộ nhớ RAM server (Memory Ceiling): Đạt trần ổn định ở mức **141.9 MB** và duy trì nằm ngang (flat plateau), khẳng định hệ thống **không bị rò rỉ bộ nhớ (Zero Memory Leak)**.
+  - Xuất thành công báo cáo: `report-final/html-reports/23120228_Endurance_20261117_dashboard.html` và file JSON summary tương ứng.
