@@ -731,3 +731,21 @@
     - Xuất file Summary JSON: `23120228_Endurance_20261117_summary.json`.
     - Xuất file HTML Dashboard: `23120228_Endurance_20261117_dashboard.html`.
   - Toàn bộ 4 kịch bản (Load, Stress, Spike, Endurance) hiện đã có đầy đủ 100% cả 4 định dạng bằng chứng: Raw CSV, Standard JTL, Summary JSON, và HTML Dashboard.
+
+---
+
+### Lần 41: Kiểm toán đối soát chéo độc lập giữa Summary JSON và Full Raw CSV/JTL
+- **Tên công cụ AI**: Antigravity (Gemini 3.8 Flash)
+- **Ngày và giờ**: 2026-11-17 21:07:13
+- **Câu lệnh (Prompt)**:
+  ```text
+  kiểm tra lại summary có khớp với raw đó không
+  ```
+- **Kết quả do AI tạo ra**:
+  - Viết script Python phân tích độc lập để đối soát từng dòng dữ liệu giữa file tổng hợp `summary.json` và file nhật ký thô `raw.csv` / `raw.jtl`.
+  - Kết quả kiểm toán: **Khớp tuyệt đối 100% đến từng request và từng phần trăm mili-giây** trên cả 4 kịch bản:
+    1. **Load Test:** Tổng số request = 960, Avg = 4.09 ms, p95 = 11.47 ms, Max = 17.90 ms, Lỗi = 0.
+    2. **Stress Test:** Tổng số request = 5,124, Avg = 3.56 ms, p95 = 7.21 ms, Max = 17.44 ms, Lỗi = 0.
+    3. **Spike Test:** Tổng số request = 2,210, Avg = 3.16 ms, p95 = 5.96 ms, Max = 13.67 ms, Lỗi = 98 requests (4.43% do lockout FR-02).
+    4. **Endurance Test:** Tổng số request = 12,608, Avg = 3.15 ms, p95 = 6.44 ms, Max = 19.59 ms, Lỗi = 0.
+  - Cung cấp bảng kết quả đối soát trực quan để sinh viên kiểm tra và tự tin trả lời vấn đáp.
