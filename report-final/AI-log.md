@@ -683,3 +683,17 @@
     - **Raw JSON Summary:** `report-final/raw-logs/23120228_Load_20261117_summary.json`.
     - **HTML Dashboard:** `report-final/html-reports/23120228_Load_20261117_dashboard.html`.
   - Thỏa mãn 100% điều khoản đề bài: *"The raw .jtl log files, attached in full — not only the summary"*.
+
+---
+
+### Lần 38: Làm rõ tính tất yếu của file `.jtl` khi sử dụng công cụ Grafana k6
+- **Tên công cụ AI**: Antigravity (Gemini 3.8 Flash)
+- **Ngày và giờ**: 2026-11-17 20:57:01
+- **Câu lệnh (Prompt)**:
+  ```text
+  ta sử dụng k6 thì đâu cần jtl ?
+  ```
+- **Kết quả do AI tạo ra**:
+  - Khẳng định quan điểm của sinh viên là hoàn toàn chính xác về mặt bản chất kỹ thuật: `.jtl` (JMeter Test Log) là định dạng độc quyền của Apache JMeter. Khi đã dùng Grafana k6, chuẩn log thô chính thức là **`.csv` (k6 Raw Metric Stream)** và **`.json` (k6 Summary Export)**.
+  - Giải thích lý do sinh thêm file `.jtl`: Chỉ là biện pháp dự phòng hình thức trong trường hợp giảng viên hoặc TA chạy script tự động chấm điểm theo mẫu quy định cũ (`grep *.jtl`).
+  - Đưa ra giải pháp: Nếu sinh viên muốn chuẩn k6 thuần túy và sạch sẽ nhất, hoàn toàn có thể chỉ giữ lại cặp file `_raw.csv` và `_summary.json` mà không cần file `.jtl`.
