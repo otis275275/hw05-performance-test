@@ -2,6 +2,7 @@ import http from 'k6/http';
 import { check, sleep, group } from 'k6';
 import { Trend, Rate, Counter } from 'k6/metrics';
 import exec from 'k6/execution';
+import { SharedArray } from 'k6/data';
 
 // ====================================================================
 // METRIC DEFINITIONS & THRESHOLDS
@@ -30,12 +31,8 @@ export const options = {
 };
 
 // ====================================================================
-// DATA-DRIVEN LOADING (CSV Parsing in init stage)
+// DATA-DRIVEN LOADING (SharedArray: Zero-copy memory across all VUs)
 // ====================================================================
-const usersRaw = open('./data/users.csv');
-const profilesRaw = open('./data/profiles.csv');
-const lockoutRaw = open('./data/lockout_accounts.csv');
-
 function parseCsv(rawText) {
   const lines = rawText.trim().split('\n');
   const headers = lines[0].split(',').map(h => h.trim());
@@ -49,9 +46,17 @@ function parseCsv(rawText) {
   });
 }
 
-const users = parseCsv(usersRaw);
-const profiles = parseCsv(profilesRaw);
-const lockoutAccounts = parseCsv(lockoutRaw);
+const users = new SharedArray('users', function () {
+  return parseCsv(open('./data/users.csv'));
+});
+
+const profiles = new SharedArray('profiles', function () {
+  return parseCsv(open('./data/profiles.csv'));
+});
+
+const lockoutAccounts = new SharedArray('lockout_accounts', function () {
+  return parseCsv(open('./data/lockout_accounts.csv'));
+});
 
 const BASE_URL = __ENV.BASE_URL || 'http://localhost:3000';
 

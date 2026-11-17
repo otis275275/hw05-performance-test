@@ -283,3 +283,20 @@
     * `exec.scenario.iterationInTest` là một bộ đếm đơn điệu toàn cục (Globally Unique Monotonic Counter) chạy từ `0` đến `N-1` trên toàn bộ bài test xuyên suốt mọi VUs.
     * Khi dùng `exec.scenario.iterationInTest % array.length`, việc xoay vòng dữ liệu từ `profiles.csv` và `lockout_accounts.csv` đạt được sự phân bổ đều tuyệt đối 100%, không bao giờ xảy ra va chạm hay lệch pha cục bộ.
   - Cập nhật mã nguồn `23120228_Load_20261117.js` áp dụng `exec.scenario.iterationInTest` theo đúng đề xuất Human Review.
+
+
+---
+
+### Lần 16: Phân tích vai trò của SharedArray (k6/data) và tối ưu hóa bộ nhớ cho các bài test tải cao
+- **Tên công cụ AI**: Antigravity (Gemini 3.8 Flash)
+- **Ngày và giờ**: 2026-11-17 11:18:29
+- **Câu lệnh (Prompt)**:
+  ```text
+  có cần sử dụng sharedArray kh
+  ```
+- **Kết quả do AI tạo ra**:
+  - Phân tích cơ chế quản lý bộ nhớ của k6 (k6 Memory Model):
+    * Khi khai báo mảng thông thường ở phạm vi toàn cục (`const profiles = parseCsv(...)`), mỗi Virtual User (VU) khi khởi tạo máy ảo JavaScript độc lập (goja runtime) sẽ **sao chép (clone) toàn bộ mảng đó vào Heap RAM riêng của mình**. Với 15 VUs thì chưa ảnh hưởng nhiều, nhưng khi chạy Stress Test (100 VUs) hoặc Spike Test (80 VUs), việc nhân bản 100 lần mảng dữ liệu sẽ làm tiêu tốn RAM của máy kiểm thử và tăng thời gian dừng do Garbage Collection (GC pauses).
+    * Khi dùng `SharedArray` từ module `k6/data`: Dữ liệu chỉ được nạp và phân tích duy nhất 1 lần tại Init stage, lưu trữ dưới dạng bộ nhớ chỉ đọc (Read-only Shared Memory) ở tầng Go engine. Tất cả các VUs đều trỏ chung vào cùng một vùng nhớ mà không tốn thêm byte RAM nào.
+  - Kết luận: **Rất nên dùng `SharedArray`**. Đây là Best Practice chuẩn mực của Grafana Labs trong kiểm thử hiệu năng Data-Driven và đồng bộ hoàn hảo với kiến trúc Demo 2 đã nghiên cứu.
+  - Tiến hành bọc dữ liệu CSV bằng `SharedArray` trong toàn bộ các kịch bản.
