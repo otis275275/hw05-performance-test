@@ -567,3 +567,24 @@
   - Cập nhật liên kết kho lưu trữ GitHub chính thức trong `MAIN_REPORT.md`, `README.md` sang repo cá nhân `https://github.com/otis275275/hw05-performance-test`.
   - Xuất lại `MAIN_REPORT.pdf` và `AI-log.pdf`.
   - Chuẩn bị commit và lệnh `git push -u origin main` để đẩy toàn bộ nhánh lên GitHub cá nhân.
+
+---
+
+### Lần 32: Tách nhánh cô lập `eshop-sut` bằng `git subtree` để đẩy lên Repository cá nhân
+- **Tên công cụ AI**: Antigravity (Gemini 3.8 Flash)
+- **Ngày và giờ**: 2026-11-17 14:36:09
+- **Câu lệnh (Prompt)**:
+  ```text
+  push những thay đổi trong @[/home/sv/Downloads/seminar testing/Software-Testing-Seminar-Group10/eshop-sut] thôi, không phải toàn bộ foldẻ Softẳe testing
+  ```
+- **Kết quả do AI tạo ra**:
+  - Nhận diện yêu cầu: Chỉ đưa nội dung của thư mục con `eshop-sut` làm thư mục gốc (Root) của repository cá nhân `otis275275/hw05-performance-test`, loại bỏ toàn bộ các thư mục nhóm seminar bên ngoài (`slides/`, `postman/`, `output/`, v.v.).
+  - Sử dụng kỹ thuật Git nâng cao `git subtree split`:
+    ```bash
+    git subtree split --prefix=eshop-sut -b eshop-standalone
+    ```
+  - Tạo thành công nhánh cô lập `eshop-standalone` chứa 100% lịch sử commit và chỉ gồm các file thuộc `eshop-sut` tại thư mục gốc.
+  - Hướng dẫn sinh viên câu lệnh đẩy trực tiếp nhánh này vào nhánh `main` của repository cá nhân:
+    ```bash
+    git push -u origin eshop-standalone:main
+    ```
