@@ -98,19 +98,19 @@ Trong quá trình để AI sinh mã kịch bản, sinh viên đã tiến hành r
 |---|:---:|:---:|:---:|:---:|
 | **Thời gian thực thi** | 1 phút 35 giây | 1 phút 55 giây | 1 phút 15 giây | **11 phút 02 giây** |
 | **Đỉnh Virtual Users (VUs)** | **15 VUs** | **100 VUs** | **80 VUs** | **25 VUs** |
-| **Tổng số HTTP Requests** | **957** requests | **5,124** requests | **2,210** requests | **12,602** requests |
-| **Thông lượng (Throughput)** | **9.78** req/s | **43.23** req/s | **29.18** req/s | **19.02** req/s |
-| **Độ trễ trung bình (Avg)** | **4.42 ms** | **3.59 ms** | **3.26 ms** | **3.82 ms** |
-| **Độ trễ Median (p50)** | **2.18 ms** | **2.23 ms** | **2.00 ms** | **2.04 ms** |
-| **Độ trễ Phân vị p90** | **11.56 ms** | **6.38 ms** | **6.09 ms** | **7.52 ms** |
-| **Độ trễ Phân vị p95 (Toàn cục)** | **12.33 ms** | **7.58 ms** | **6.60 ms** | **11.28 ms** |
-| **Độ trễ Cực đại (Max Latency)** | **16.81 ms** | **18.25 ms** | **14.13 ms** | **26.05 ms** |
-| **Auth Login p95** | 2.80 ms | 4.57 ms | 3.69 ms | 5.29 ms |
-| **Read Profile p95** | 2.50 ms | 6.49 ms | 3.80 ms | 5.20 ms |
-| **Transactional Update p95** | 13.18 ms | 9.86 ms | 8.90 ms | 13.20 ms |
-| **Lockout Check p95** | 2.29 ms | 3.71 ms | 2.40 ms | 2.34 ms |
-| **Tỷ lệ lỗi (Error Rate)** | **0.00%** (0/957) | **0.00%** (0/5124) | **4.43%** *(98/2210)* | **0.00%** (0/12602) |
-| **Số lượt E2E Journey hoàn tất** | **299 / 299** (100%) | **1,601 / 1,601** (100%) | **660 / 758** (87.07%) | **3,938 / 3,938** (100%) |
+| **Tổng số HTTP Requests** | **960** requests | **5,124** requests | **2,210** requests | **12,608** requests |
+| **Thông lượng (Throughput)** | **9.80** req/s | **43.23** req/s | **29.18** req/s | **19.04** req/s |
+| **Độ trễ trung bình (Avg)** | **4.09 ms** | **3.56 ms** | **3.16 ms** | **3.15 ms** |
+| **Độ trễ Median (p50)** | **2.31 ms** | **2.42 ms** | **2.13 ms** | **2.00 ms** |
+| **Độ trễ Phân vị p90** | **11.07 ms** | **6.02 ms** | **5.48 ms** | **5.44 ms** |
+| **Độ trễ Phân vị p95 (Toàn cục)** | **11.47 ms** | **7.21 ms** | **5.96 ms** | **6.44 ms** |
+| **Độ trễ Cực đại (Max Latency)** | **17.90 ms** | **17.44 ms** | **13.67 ms** | **19.59 ms** |
+| **Auth Login p95** | 3.19 ms | 4.98 ms | 3.29 ms | 3.77 ms |
+| **Read Profile p95** | 2.82 ms | 6.26 ms | 3.83 ms | 3.72 ms |
+| **Transactional Update p95** | 12.02 ms | 8.91 ms | 8.50 ms | 10.80 ms |
+| **Lockout Check p95** | 4.86 ms | 5.80 ms | 2.27 ms | 2.32 ms |
+| **Tỷ lệ lỗi (Error Rate)** | **0.00%** (0/960) | **0.00%** (0/5124) | **4.43%** *(98/2210)* | **0.00%** (0/12608) |
+| **Số lượt E2E Journey hoàn tất** | **300 / 300** (100%) | **1,601 / 1,601** (100%) | **660 / 758** (87.07%) | **3,940 / 3,940** (100%) |
 | **Trạng thái Thresholds** | **PASSED (100%)** | **PASSED (100%)** | **PASSED (100%)** | **PASSED (100%)** |
 | **Tiêu thụ RAM của Server** | ~73.9 MB | ~123.2 MB | ~136.0 MB | **141.9 MB (Trần ổn định)** |
 

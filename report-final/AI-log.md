@@ -749,3 +749,19 @@
     3. **Spike Test:** Tổng số request = 2,210, Avg = 3.16 ms, p95 = 5.96 ms, Max = 13.67 ms, Lỗi = 98 requests (4.43% do lockout FR-02).
     4. **Endurance Test:** Tổng số request = 12,608, Avg = 3.15 ms, p95 = 6.44 ms, Max = 19.59 ms, Lỗi = 0.
   - Cung cấp bảng kết quả đối soát trực quan để sinh viên kiểm tra và tự tin trả lời vấn đáp.
+
+---
+
+### Lần 42: Trình bày chi tiết toàn bộ cấu trúc và nội dung thực hiện của Task 2
+- **Tên công cụ AI**: Antigravity (Gemini 3.8 Flash)
+- **Ngày và giờ**: 2026-11-17 21:22:04
+- **Câu lệnh (Prompt)**:
+  ```text
+  ròi oke task 2 bạn đã làm gì
+  ```
+- **Kết quả do AI tạo ra**:
+  - Trình bày toàn diện 3 phần cốt lõi của **Task 2 (AI analysis and misinterpretation hunt - 10 điểm)** được trình bày tại Mục 4 của `MAIN_REPORT.md`:
+    1. **Phần 1 - Raw AI Output:** Mô phỏng bản phân tích sơ bộ của AI chứa các ảo giác và lỗi đọc nhầm đại lượng thường gặp.
+    2. **Phần 2 - Bảng Săn lỗi AI (Misinterpretation Hunt):** Đối soát 3 lỗi sai thực tế với số liệu chuẩn trong log file thô (Lỗi gán nhầm VU thành RPS; Lỗi gán nhầm Throughput thành latency PUT /me; Lỗi phóng đại tỷ lệ lỗi và hiểu sai mã lỗi 403 thành crash server).
+    3. **Phần 3 - Thẩm định Đề xuất Tối ưu (Feasible vs Hallucinated):** Phân loại và phản biện kỹ thuật 4 giải pháp (Index email, WAL mode vs Fake Connection pool cho SQLite, Kafka/Redis microservices).
+  - Cập nhật số liệu thực nghiệm mới nhất vào Bảng tổng kết kịch bản tại Section 3.3 `MAIN_REPORT.md` và tái xuất bản bản PDF.

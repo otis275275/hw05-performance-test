@@ -16,7 +16,7 @@
 1. **Load Testing (`23120228_Load_20261117.js`):** Tải danh định 15 VUs trong 1 phút 35 giây. Đạt 100% SLA (`p95 = 12.33ms`, lỗi `0.00%`).
 2. **Stress Testing (`23120228_Stress_20261117.js`):** Tải bậc thang leo dốc 20 $\rightarrow$ 50 $\rightarrow$ 100 VUs trong 1 phút 55 giây. Xử lý 5,124 requests, đạt đỉnh Throughput 43.23 req/s.
 3. **Spike Testing (`23120228_Spike_20261117.js`):** Sốc tải tức thì từ 5 VUs lên 80 VUs trong 10 giây, giữ 20s rồi hạ về 5 VUs. Hệ thống kích hoạt cơ chế khóa tài khoản `403` khi chịu sốc tải và tự hồi phục hoàn toàn sau khi tải giảm.
-4. **Endurance / Soak Testing (`23120228_Endurance_20261117.js`):** Ngâm tải ổn định 25 VUs liên tục suốt 11 phút (12,602 requests).
+4. **Endurance / Soak Testing (`23120228_Endurance_20261117.js`):** Ngâm tải ổn định 25 VUs liên tục suốt 11 phút (12,608 requests).
 
 ---
 
