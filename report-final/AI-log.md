@@ -521,3 +521,17 @@
       1. Quay video demo $\ge 6$ phút thuyết minh tiếng Việt có khung hình terminal k6 và htop/resource monitor, đăng lên YouTube (Unlisted).
       2. Cung cấp link YouTube để AI điền vào `README.md`, `MAIN_REPORT.md` và cập nhật lại file zip cuối cùng.
       3. Thực hiện `git push` lên GitHub remote repository.
+
+---
+
+### Lần 29: Hướng dẫn tạo GitHub Issue thực tế và chụp ảnh minh chứng cho Báo cáo
+- **Tên công cụ AI**: Antigravity (Gemini 3.8 Flash)
+- **Ngày và giờ**: 2026-11-17 14:24:25
+- **Câu lệnh (Prompt)**:
+  ```text
+  co record lỗi lên github issue chưa
+  ```
+- **Kết quả do AI tạo ra**:
+  - Thông báo hiện trạng: Toàn bộ nội dung báo cáo lỗi (Bug Report & Performance Issues) đã được soạn thảo đầy đủ 100% trong `BUG_REPORT.md` và `BUG_REPORT.pdf`, nhưng chưa tạo trực tiếp trên giao diện web GitHub Issues do môi trường local chưa tích hợp GitHub CLI/token xác thực cá nhân.
+  - Cung cấp đường dẫn trực tiếp và mẫu nội dung Markdown chuẩn bị sẵn cho **BUG-01** (`server.js:54 login_attempts + 2`) để sinh viên mở trình duyệt tạo Issue trên repo chỉ với 1 cú click.
+  - Hướng dẫn sinh viên chụp ảnh màn hình (screenshot) Issue sau khi tạo và lưu vào thư mục `report-final/screenshots/` để thỏa mãn 100% yêu cầu Mục 14 đề bài.
