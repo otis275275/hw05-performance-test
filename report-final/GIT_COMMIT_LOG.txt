@@ -1,4 +1,5 @@
-* 9f3118a (HEAD -> main) test(endurance): complete 10-min soak test, establish hardware threshold and memory ceiling
+* 6db3024 (HEAD -> main) docs(report): finalize formal MAIN_REPORT covering Task 1, Task 2, Task 3, and AI Critique
+* 9f3118a test(endurance): complete 10-min soak test, establish hardware threshold and memory ceiling
 * d5f8e03 test(evidence): execute Load, Stress, and Spike tests, generate HTML dashboards and raw JSON logs
 * c0d3292 feat(test-plans): add Stress, Spike, and Endurance k6 test plans with SharedArray and iterationInTest
 * 6f61b62 refactor(load-test): integrate SharedArray for zero-copy memory optimization across VUs (Human Review)
@@ -14,6 +15,3 @@
 | *   1f6f274 Merge branch 'main' of https://github.com/HuynhDucThinh/Software-Testing-Seminar-Group10 # Please enter a commit message to explain why this merge is necessary, # especially if it merges an updated upstream into a topic branch. # # Lines starting with '#' will be ignored, and an empty message aborts # the commit.
 | |\  
 | * | 25ab310 docs: update slides
-* | | 7ccffc0 docs(k6): add Demo03 agent workflow, evidence and final report
-| |/  
-|/|   
