@@ -1,0 +1,6 @@
+email,valid_password,wrong_password
+lockout_test01@eshop.com,CorrectPass123!,WrongPass999!
+lockout_test02@eshop.com,CorrectPass123!,WrongPass999!
+lockout_test03@eshop.com,CorrectPass123!,WrongPass999!
+lockout_test04@eshop.com,CorrectPass123!,WrongPass999!
+lockout_test05@eshop.com,CorrectPass123!,WrongPass999!

@@ -81,3 +81,75 @@
     1. `reset_db.js`: Script Node.js reset trạng thái khóa tài khoản (`locked_until = NULL`, `login_attempts = 0`) và seed dữ liệu người dùng chuẩn.
     2. `run_scenario.sh`: Script Bash tự động chạy k6 xuất Web Dashboard HTML và lưu file JSON summary.
     3. `audit_metrics.py`: Công cụ Python trích xuất và tính toán độc lập các phân vị độ trễ (p50, p90, p95, p99), thông lượng RPS và tỷ lệ lỗi để phục vụ đối soát.
+
+
+---
+
+### Lần 5: Tư vấn nguyên tắc xác định và tinh chỉnh ngưỡng hiệu năng (Thresholds)
+- **Tên công cụ AI**: Antigravity (Gemini 3.8 Flash)
+- **Ngày và giờ**: 2026-11-17 09:28:34
+- **Câu lệnh (Prompt)**:
+  ```text
+  làm sao ta biết nên đặt threshold nào, liệu ta có adjust sau mỗi lần test không
+  ```
+- **Kết quả do AI tạo ra**:
+  - Phân tích cơ sở lý thuyết thiết lập Thresholds:
+    1. Dựa trên SLA/SLO công nghiệp chuẩn cho E-commerce (Read < 200ms, Auth < 500ms, Transactional < 500ms, Error rate < 1%).
+    2. Dựa trên đo đạc Baseline thực nghiệm (chạy tải tối thiểu 1 VU để đo network & runtime overhead).
+    3. Phân tầng theo mục tiêu của từng loại kịch bản: Load test áp ngưỡng nghiêm ngặt; Stress test nới lỏng để dò điểm gãy; Spike test tập trung vào khả năng tự hồi phục sau sốc tải; Soak/Endurance tập trung vào độ trôi p95 và ổn định bộ nhớ.
+  - Khẳng định tính tất yếu của việc điều chỉnh (adjust) threshold qua các lần chạy:
+    - AI thường đưa ra các threshold lý thuyết chung chung, không tính đến đặc thù phần cứng (CPU/RAM) và điểm nghẽn kiến trúc (SQLite database lock contention khi ghi đồng thời).
+    - Việc sinh viên đối soát log thực tế, phản biện threshold của AI và tinh chỉnh lại chính là minh chứng cốt lõi cho kỹ năng Human Review (Bloom-AI Level G9.3 / G9.4) theo đúng yêu cầu Task 1 & Task 2 của đề bài.
+
+
+---
+
+### Lần 6: Giải thích tính bắt buộc của mục "Hallucinated" trong Bước S5 theo barem đề bài
+- **Tên công cụ AI**: Antigravity (Gemini 3.8 Flash)
+- **Ngày và giờ**: 2026-11-17 09:31:24
+- **Câu lệnh (Prompt)**:
+  ```text
+  eshop-sut/skills/performance-testing/SKILL.md ở bươc 5, phần hallucinate có cần thiết k? tui nghĩ nó đang làm quá phức tạp lên
+  ```
+- **Kết quả do AI tạo ra**:
+  - Trích dẫn trực tiếp yêu cầu bắt buộc từ đề bài HW05 (Mục 6 - Task 2, dòng 208–211):
+    > *"Judge the AI's recommendations. Have the AI propose optimizations (e.g., adding a database index, a connection pool, or enabling SQLite WAL) and classify each as feasible or hallucinated, with reasoning."*
+  - Làm rõ mục đích của giảng viên: Đây là tiêu chí đánh giá năng lực tư duy phản biện (Critical Thinking - Bloom Level G9.3 / G9.4). Giảng viên muốn sinh viên không tin mù quáng vào các lời khuyên của AI mà phải phân định rõ cái nào áp dụng được cho hệ thống thực tế (Node.js/SQLite), cái nào là AI "chém gió" / ảo giác (như khuyên cấu hình connection pool hay clustering cho SQLite).
+  - Đề xuất tinh gọn cách diễn đạt trong SKILL.md để dễ hiểu và thực dụng hơn nhưng vẫn bám sát 100% barem chấm điểm 10 điểm của Task 2.
+
+
+---
+
+### Lần 7: Lập kế hoạch chi tiết triển khai Task 1 (AI-assisted Test Design & Execution)
+- **Tên công cụ AI**: Antigravity (Gemini 3.8 Flash)
+- **Ngày và giờ**: 2026-11-17 09:33:15
+- **Câu lệnh (Prompt)**:
+  ```text
+  oke ta sẽ bắt đầu với task 1 trước, lập plan cho tui ta sẽ làm gì để tui dễ dàng đối chiếu
+  ```
+- **Kết quả do AI tạo ra**:
+  - Xây dựng bản kế hoạch chi tiết (Action Plan) cho Task 1 gồm 5 giai đoạn rõ ràng:
+    1. **Giai đoạn 1 (Dữ liệu & Môi trường):** Chuẩn bị tập dữ liệu CSV Data-Driven (`users.csv`, `profiles.csv`, `lockout_accounts.csv`) và hoàn thiện script reset database.
+    2. **Giai đoạn 2 (Thiết kế kịch bản với AI & Human Review):** Sinh mã kịch bản Load, Stress, Spike, Endurance theo đúng quy chuẩn tên `{StudentID}_{ScenarioType}_{YYYYMMDD}.js`. Lập bảng Human Review chỉ ra lỗi AI sinh ra (thiếu think-time, sai threshold, thiếu xử lý 403 lockout).
+    3. **Giai đoạn 3 (Thực thi & Thu thập bằng chứng đa góc nhìn):** Chạy đo đạc với k6 xuất 3 dạng báo cáo khác nhau (Console Summary, Web Dashboard HTML tĩnh, JSON Summary thô); chụp ảnh màn hình chạy cùng `htop` và bảng phần cứng.
+    4. **Giai đoạn 4 (Xác định ngưỡng bền vững Endurance Threshold):** Chạy kịch bản Endurance 10–15 phút tìm ngưỡng RPS ổn định và trần bộ nhớ.
+    5. **Giai đoạn 5 (Tài liệu hóa & Git Commit):** Đóng gói raw logs, HTML reports và ghi log commit Git cho từng bước.
+
+
+---
+
+### Lần 8: Triển khai Giai đoạn 1 - Chuẩn bị Dữ liệu Data-Driven (CSV) và Đồng bộ Database
+- **Tên công cụ AI**: Antigravity (Gemini 3.8 Flash)
+- **Ngày và giờ**: 2026-11-17 09:37:43
+- **Câu lệnh (Prompt)**:
+  ```text
+  oke ta bắt đầu giai đoạn 1 trước đi
+  ```
+- **Kết quả do AI tạo ra**:
+  - Tạo thư mục lưu trữ dữ liệu kiểm thử tại `eshop-sut/performance-tests/data/`.
+  - Soạn thảo 3 tệp dữ liệu CSV chuẩn hóa phục vụ Data-driven testing:
+    1. `users.csv`: Chứa danh sách 20 tài khoản người dùng hợp lệ để các VUs đăng nhập song song mà không tranh chấp.
+    2. `profiles.csv`: Chứa 20 bộ thông tin hồ sơ đa dạng (`name`, `shipping_address`, `phone`) dùng cho API `PUT /api/users/me`.
+    3. `lockout_accounts.csv`: Chứa thông tin tài khoản dùng để kích hoạt ngưỡng khóa sau 3 lần sai mật khẩu (`403 Forbidden`).
+  - Nâng cấp script `reset_db.js` để tự động gỡ khóa và seed đồng bộ 20 tài khoản này vào cơ sở dữ liệu SQLite `database.sqlite`.
+  - Thực thi reset và xác minh toàn bộ dữ liệu mẫu đã sẵn sàng trong database.
